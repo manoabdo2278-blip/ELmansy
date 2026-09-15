@@ -1,167 +1,193 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELmansy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - ELmansy</title>
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            margin: 0;
+            padding: 30px;
+        }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f9;
-    color: #222;
-}
+        .box {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px #ddd;
+        }
 
-header {
-    background: #2563eb;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 25px;
-}
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
 
-.welcome {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 3px 12px #ddd;
-}
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 25px;
-}
-
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 3px 12px #ddd;
-}
-
-button {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #1d4ed8;
-}
-
-.login {
-    margin-top: 25px;
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-</style>
+        #message {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
+<div class="box">
+
     <h1>🎓 ELmansy</h1>
-    <p>منصتك التعليمية</p>
-</header>
+    <h2>إنشاء حساب</h2>
 
-<div class="container">
+    <input type="text" id="name" placeholder="الاسم">
 
-    <div class="welcome">
-        <h2>أهلاً بيك في منصة ELmansy 👋</h2>
-        <p>محاضراتك ومجموعاتك التعليمية في مكان واحد</p>
-        <button onclick="welcome()">ابدأ الآن</button>
-    </div>
+    <input type="tel" id="phone" placeholder="رقم الهاتف">
 
-    <div class="cards">
+    <input type="email" id="email" placeholder="البريد الإلكتروني">
 
-        <div class="card">
-            <h2>📚</h2>
-            <h3>محاضراتي</h3>
-            <p>الوصول إلى جميع المحاضرات</p>
-            <button onclick="showMessage('المحاضرات')">دخول</button>
-        </div>
+    <input type="password" id="password" placeholder="كلمة السر">
 
-        <div class="card">
-            <h2>👥</h2>
-            <h3>مجموعاتي</h3>
-            <p>شاهد مجموعاتك التعليمية</p>
-            <button onclick="showMessage('المجموعات')">دخول</button>
-        </div>
+    <input type="password" id="confirmPassword"
+           placeholder="تأكيد كلمة السر">
 
-        <div class="card">
-            <h2>🎥</h2>
-            <h3>الفيديوهات</h3>
-            <p>شاهد المحاضرات المسجلة</p>
-            <iframe width="100%" height="400" src="https://www.youtube.com/embed/a91r5PbKl1o" title="فيديو ELmansy" frameborder="0" allowfullscreen></iframe>س
-            <button onclick="showMessage('الفيديوهات')">مشاهدة</button>
-        </div>
+    <button onclick="registerUser()">إنشاء الحساب</button>
 
-    </div>
-
-    <div class="login">
-        <h2>🔐 تسجيل الدخول</h2>
-
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-
-        <input type="password" id="password" placeholder="كلمة المرور">
-
-        <button onclick="login()">تسجيل الدخول</button>
-
-        <p id="result"></p>
-    </div>
+    <p id="message"></p>
 
 </div>
 
-<script>
+<script type="module">
 
-function welcome() {
-    alert("أهلاً بيك في منصة ELmansy ❤️");
-}
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.3.1/firebase-app.js";
 
-function showMessage(section) {
-    alert("قسم " + section + " هيتم تجهيزه قريباً 📚");
-}
+import {
+    getAuth,
+    createUserWithEmailAndPassword
+} from
+"https://www.gstatic.com/firebasejs/12.3.1/firebase-auth.js";
 
-function login() {
+import {
+    getFirestore,
+    doc,
+    setDoc
+} from
+"https://www.gstatic.com/firebasejs/12.3.1/firebase-firestore.js";
 
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
 
-    if (email === "" || password === "") {
-        document.getElementById("result").innerText =
-            "من فضلك اكتب البريد الإلكتروني وكلمة المرور";
+/* ضع بيانات Firebase هنا */
+
+const firebaseConfig = {
+    apiKey: "ضع_API_KEY_هنا",
+    authDomain: "ضع_AUTH_DOMAIN_هنا",
+    projectId: "ضع_PROJECT_ID_هنا",
+    storageBucket: "ضع_STORAGE_BUCKET_هنا",
+    messagingSenderId: "ضع_MESSAGING_SENDER_ID_هنا",
+    appId: "ضع_APP_ID_هنا"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+window.registerUser = async function () {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    const message =
+        document.getElementById("message");
+
+
+    if (!name || !phone || !email || !password || !confirmPassword) {
+
+        message.innerText =
+            "من فضلك املأ جميع البيانات";
+
         return;
     }
 
-    document.getElementById("result").innerText =
-        "تم تسجيل الدخول بنجاح ✅";
-}
+
+    if (password !== confirmPassword) {
+
+        message.innerText =
+            "كلمتا السر غير متطابقتين ❌";
+
+        return;
+    }
+
+
+    try {
+
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        const uid =
+            userCredential.user.uid;
+
+
+        await setDoc(
+            doc(db, "users", uid),
+            {
+                name: name,
+                phone: phone,
+                email: email
+            }
+        );
+
+
+        message.innerText =
+            "تم إنشاء الحساب بنجاح ✅";
+
+    } catch (error) {
+
+        message.innerText =
+            "حدث خطأ: " + error.message;
+    }
+
+};
 
 </script>
 
