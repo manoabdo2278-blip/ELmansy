@@ -1,908 +1,1103 @@
-
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            margin: 0;
-            padding: 30px;
-        }
-
-        .box {
-            max-width: 400px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 3px 15px #ddd;
-        }
-
-        h1 {
-            text-align: center;
-            color: #2563eb;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 10px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        #message {
-            text-align: center;
-            margin-top: 15px;
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="box">
-
-    <h1>🎓 ELmansy</h1>
-    <h2>إنشاء حساب</h2>
-
-    <input type="text" id="name" placeholder="الاسم">
-
-    <input type="tel" id="phone" placeholder="رقم الهاتف">
-
-    <input type="email" id="email" placeholder="البريد الإلكتروني">
-
-    <input type="password" id="password" placeholder="كلمة السر">
-
-    <input type="password" id="confirmPassword"
-           placeholder="تأكيد كلمة السر">
-
-    <button onclick="registerUser()">إنشاء الحساب</button>
-
-    <p id="message"></p>
-
-</div>
-
-<script type="module">
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.3.1/firebase-app.js";
-
-import {
-    getAuth,
-    createUserWithEmailAndPassword
-} from
-"https://www.gstatic.com/firebasejs/12.3.1/firebase-auth.js";
-
-import {
-    getFirestore,
-    doc,
-    setDoc
-} from
-"https://www.gstatic.com/firebasejs/12.3.1/firebase-firestore.js";
-
-
-/* ضع بيانات Firebase هنا */
-
-const firebaseConfig = {
-    apiKey: "ضع_API_KEY_هنا",
-    authDomain: "ضع_AUTH_DOMAIN_هنا",
-    projectId: "ضع_PROJECT_ID_هنا",
-    storageBucket: "ضع_STORAGE_BUCKET_هنا",
-    messagingSenderId: "ضع_MESSAGING_SENDER_ID_هنا",
-    appId: "ضع_APP_ID_هنا"
-};
-
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-
-window.registerUser = async function () {
-
-    const name =
-        document.getElementById("name").value.trim();
-
-    const phone =
-        document.getElementById("phone").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const password =
-        document.getElementById("password").value;
-
-    const confirmPassword =
-        document.getElementById("confirmPassword").value;
-
-    const message =
-        document.getElementById("message");
-
-
-    if (!name || !phone || !email || !password || !confirmPassword) {
-
-        message.innerText =
-            "من فضلك املأ جميع البيانات";
-
-        return;
-    }
-
-
-    if (password !== confirmPassword) {
-
-        message.innerText =
-            "كلمتا السر غير متطابقتين ❌";
-
-        return;
-    }
-
-
-    try {
-
-        const userCredential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-        const uid =
-            userCredential.user.uid;
-
-
-        await setDoc(
-            doc(db, "users", uid),
-            {
-                name: name,
-                phone: phone,
-                email: email
-            }
-        );
-
-
-        message.innerText =
-            "تم إنشاء الحساب بنجاح ✅";
-
-    } catch (error) {
-
-        message.innerText =
-            "حدث خطأ: " + error.message;
-    }
-
-};
-
-</script>
-
-</body>
-</html>
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELmansy | المنصة التعليمية</title>
 
-    <title>MANO Learning Platform</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Tahoma,sans-serif;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+body{
+  background:#f4f6fb;
+  color:#202535;
+  transition:.3s;
+}
 
-        body {
-            background: #f5f7ff;
-            color: #172554;
-        }
+body.dark{
+  background:#111522;
+  color:#fff;
+}
 
-        /* ===== الشريط الجانبي ===== */
+button,input,textarea,select{
+  font:inherit;
+}
 
-        .sidebar {
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: 260px;
-            height: 100vh;
-            background: #0b1535;
-            color: white;
-            padding: 25px 15px;
-        }
+button{
+  cursor:pointer;
+  border:0;
+}
 
-        .logo {
-            text-align: center;
-            margin-bottom: 35px;
-        }
+.app{
+  display:flex;
+  min-height:100vh;
+}
 
-        .logo h1 {
-            font-size: 30px;
-            color: white;
-        }
+/* القائمة */
+.sidebar{
+  width:250px;
+  background:#171d2f;
+  color:white;
+  padding:20px;
+  position:fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  overflow-y:auto;
+}
 
-        .logo p {
-            color: #aebbe8;
-            margin-top: 5px;
-        }
+.logo{
+  text-align:center;
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:30px;
+}
 
-        .menu button {
-            width: 100%;
-            border: none;
-            background: transparent;
-            color: white;
-            padding: 16px;
-            margin: 5px 0;
-            border-radius: 12px;
-            text-align: right;
-            font-size: 17px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.logo span{
+  color:#6c8cff;
+}
 
-        .menu button:hover,
-        .menu button.active {
-            background: #3d5edc;
-        }
+.menu button{
+  width:100%;
+  padding:14px;
+  margin:5px 0;
+  background:transparent;
+  color:#ddd;
+  text-align:right;
+  border-radius:10px;
+}
 
-        /* ===== المحتوى ===== */
+.menu button:hover,
+.menu button.active{
+  background:#293250;
+  color:white;
+}
 
-        .main {
-            margin-right: 260px;
-            padding: 25px;
-        }
+/* المحتوى */
+.main{
+  width:calc(100% - 250px);
+  margin-right:250px;
+  padding:25px;
+}
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.topbar{
+  background:white;
+  border-radius:15px;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+}
 
-        .welcome h2 {
-            font-size: 30px;
-        }
+.dark .topbar,
+.dark .card,
+.dark .modal-box{
+  background:#1b2132;
+  color:white;
+}
 
-        .welcome p {
-            color: #64748b;
-            margin-top: 8px;
-        }
+.search{
+  flex:1;
+}
 
-        .search {
-            width: 350px;
-            padding: 14px 18px;
-            border: none;
-            border-radius: 15px;
-            background: white;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
-            outline: none;
-            font-size: 15px;
-        }
+.search input{
+  width:100%;
+  padding:12px 15px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
 
-        /* ===== الإحصائيات ===== */
+.dark .search input{
+  background:#252c40;
+  color:white;
+  border-color:#444;
+}
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.icon-btn{
+  background:#eef1ff;
+  padding:11px 14px;
+  border-radius:10px;
+}
 
-        .stat {
-            background: white;
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
+/* الصفحات */
+.page{
+  display:none;
+}
 
-        .stat h3 {
-            color: #64748b;
-            margin-bottom: 12px;
-        }
+.page.active{
+  display:block;
+}
 
-        .stat strong {
-            font-size: 32px;
-        }
+.hero{
+  background:linear-gradient(135deg,#536dfe,#7c4dff);
+  color:white;
+  padding:35px;
+  border-radius:20px;
+  margin-bottom:25px;
+}
 
-        /* ===== الأقسام ===== */
+.hero h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
 
-        .section {
-            background: white;
-            padding: 25px;
-            border-radius: 18px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-        }
+.hero p{
+  opacity:.9;
+}
 
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:18px;
+  margin:20px 0;
+}
 
-        .section-title h2 {
-            font-size: 22px;
-        }
+.card{
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
 
-        .section-title button {
-            border: none;
-            background: transparent;
-            color: #3d5edc;
-            cursor: pointer;
-        }
+.stat{
+  font-size:30px;
+  font-weight:bold;
+  margin-top:10px;
+}
 
-        /* ===== المجموعات ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
 
-        .groups {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+.course{
+  overflow:hidden;
+  padding:0;
+}
 
-        .group {
-            border: 1px solid #e4e9f5;
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.course-img{
+  height:130px;
+  background:linear-gradient(135deg,#536dfe,#00bcd4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px;
+}
 
-        .group-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 14px;
-            background: #e8edff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-        }
+.course-content{
+  padding:18px;
+}
 
-        .group-info {
-            flex: 1;
-            margin-right: 15px;
-        }
+.course h3{
+  margin-bottom:8px;
+}
 
-        .group-info h3 {
-            margin-bottom: 8px;
-        }
+.small{
+  color:#777;
+  font-size:14px;
+}
 
-        .group-info p {
-            color: #64748b;
-            font-size: 14px;
-        }
+.dark .small{
+  color:#bbb;
+}
 
-        /* ===== المحاضرات ===== */
+.btn{
+  background:#536dfe;
+  color:white;
+  padding:11px 16px;
+  border-radius:9px;
+  margin-top:12px;
+}
 
-        .lectures {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
+.btn.secondary{
+  background:#eef1ff;
+  color:#536dfe;
+}
 
-        .lecture {
-            border: 1px solid #e4e9f5;
-            border-radius: 15px;
-            overflow: hidden;
-            background: white;
-        }
+.dark .btn.secondary{
+  background:#293250;
+  color:white;
+}
 
-        .lecture-image {
-            height: 150px;
-            background: linear-gradient(135deg, #263a88, #6577e8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: white;
-        }
+/* التقدم */
+.progress{
+  height:9px;
+  background:#e6e8ee;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0;
+}
 
-        .lecture-content {
-            padding: 15px;
-        }
+.progress div{
+  height:100%;
+  background:#536dfe;
+}
 
-        .lecture-content h3 {
-            margin-bottom: 8px;
-        }
+/* الاختبارات */
+.question{
+  margin:20px 0;
+  padding:18px;
+  border:1px solid #ddd;
+  border-radius:12px;
+}
 
-        .lecture-content p {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
+.option{
+  display:block;
+  padding:10px;
+  margin-top:8px;
+  background:#f2f4f8;
+  border-radius:8px;
+}
 
-        .watch {
-            width: 100%;
-            border: none;
-            padding: 11px;
-            border-radius: 9px;
-            background: #4169e1;
-            color: white;
-            cursor: pointer;
-            font-size: 15px;
-        }
+.dark .option{
+  background:#292f41;
+}
 
-        .watch:hover {
-            background: #3155c5;
-        }
+/* الملاحظات */
+textarea{
+  width:100%;
+  min-height:180px;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  resize:vertical;
+  outline:none;
+}
 
-        /* ===== الصفحات ===== */
+.dark textarea{
+  background:#252c40;
+  color:white;
+  border-color:#444;
+}
 
-        .page {
-            display: none;
-        }
+/* النافذة */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:10;
+}
 
-        .page.active {
-            display: block;
-        }
+.modal.show{
+  display:flex;
+}
 
-        /* ===== موبايل ===== */
+.modal-box{
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  width:min(600px,100%);
+  max-height:90vh;
+  overflow:auto;
+}
 
-        @media (max-width: 900px) {
+/* موبايل */
+@media(max-width:800px){
+  .sidebar{
+    width:75px;
+    padding:10px;
+  }
 
-            .sidebar {
-                width: 200px;
-            }
+  .logo{
+    font-size:16px;
+  }
 
-            .main {
-                margin-right: 200px;
-            }
+  .menu button{
+    text-align:center;
+    font-size:0;
+  }
 
-            .stats {
-                grid-template-columns: 1fr;
-            }
+  .menu button::first-letter{
+    font-size:20px;
+  }
 
-            .lectures {
-                grid-template-columns: 1fr;
-            }
-        }
+  .main{
+    width:calc(100% - 75px);
+    margin-right:75px;
+    padding:12px;
+  }
 
-        @media (max-width: 650px) {
+  .hero h1{
+    font-size:24px;
+  }
 
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-            }
-
-            .main {
-                margin-right: 0;
-            }
-
-            .topbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search {
-                width: 100%;
-            }
-
-            .groups {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  .topbar{
+    flex-wrap:wrap;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<!-- ================= القائمة ================= -->
+<div class="app">
 
-<div class="sidebar">
+<!-- القائمة الجانبية -->
+<aside class="sidebar">
 
-    <div class="logo">
-        <h1>🎓 MANO</h1>
-        <p>Learning Platform</p>
-    </div>
+  <div class="logo">
+    <span>EL</span>mansy
+  </div>
 
-    <div class="menu">
+  <div class="menu">
 
-        <button class="active" onclick="showPage('home', this)">
-            🏠 الرئيسية
-        </button>
+    <button class="active" onclick="showPage('home',this)">
+      🏠 الرئيسية
+    </button>
 
-        <button onclick="showPage('groupsPage', this)">
-            👥 مجموعاتي
-        </button>
+    <button onclick="showPage('groups',this)">
+      👥 مجموعاتي
+    </button>
 
-        <button onclick="showPage('lecturesPage', this)">
-            🎥 محاضراتي
-        </button>
+    <button onclick="showPage('lectures',this)">
+      📚 محاضراتي
+    </button>
 
-        <button onclick="showPage('libraryPage', this)">
-            📚 المكتبة
-        </button>
+    <button onclick="showPage('exams',this)">
+      📝 الاختبارات
+    </button>
 
-        <button onclick="showPage('profilePage', this)">
-            👤 الملف الشخصي
-        </button>
+    <button onclick="showPage('tasks',this)">
+      ✅ المهام
+    </button>
 
-    </div>
+    <button onclick="showPage('favorites',this)">
+      ❤️ المفضلة
+    </button>
+
+    <button onclick="showPage('notes',this)">
+      📝 ملاحظاتي
+    </button>
+
+    <button onclick="showPage('notifications',this)">
+      🔔 الإشعارات
+    </button>
+
+    <button onclick="showPage('stats',this)">
+      📊 الإحصائيات
+    </button>
+
+    <button onclick="showPage('settings',this)">
+      ⚙️ الإعدادات
+    </button>
+
+  </div>
+</aside>
+
+
+<main class="main">
+
+<!-- الشريط العلوي -->
+<div class="topbar">
+
+  <div>
+    👋 أهلاً بك في <b>ELmansy</b>
+  </div>
+
+  <div class="search">
+    <input
+      type="text"
+      id="search"
+      placeholder="🔎 ابحث عن محاضرة أو مادة..."
+      oninput="searchContent()"
+    >
+  </div>
+
+  <button class="icon-btn" onclick="toggleDark()">
+    🌙
+  </button>
 
 </div>
 
 
-<!-- ================= المحتوى ================= -->
+<!-- الرئيسية -->
+<section id="home" class="page active">
 
-<div class="main">
+  <div class="hero">
+    <h1>منصة ELmansy التعليمية 🎓</h1>
+    <p>
+      مكان واحد للمحاضرات والمجموعات والاختبارات والمهام والملاحظات.
+    </p>
 
-    <!-- الصفحة الرئيسية -->
+    <button class="btn" onclick="showPage('lectures')">
+      ابدأ التعلم 🚀
+    </button>
+  </div>
 
-    <div id="home" class="page active">
+  <div class="cards">
 
-        <div class="topbar">
-
-            <div class="welcome">
-                <h2>مرحباً بك يا mano 👋</h2>
-                <p>استمر في التعلم، فالمستقبل يبدأ من هنا</p>
-            </div>
-
-            <input
-                class="search"
-                type="text"
-                id="searchInput"
-                placeholder="ابحث عن محاضرة أو مجموعة..."
-                onkeyup="searchContent()"
-            >
-
-        </div>
-
-
-        <!-- الإحصائيات -->
-
-        <div class="stats">
-
-            <div class="stat">
-                <h3>إجمالي المحاضرات</h3>
-                <strong id="lectureCount">5</strong>
-            </div>
-
-            <div class="stat">
-                <h3>مجموعاتي</h3>
-                <strong id="groupCount">2</strong>
-            </div>
-
-            <div class="stat">
-                <h3>المحتوى</h3>
-                <strong>10</strong>
-            </div>
-
-        </div>
-
-
-        <!-- مجموعاتي -->
-
-        <div class="section">
-
-            <div class="section-title">
-                <h2>👥 مجموعاتي</h2>
-
-                <button onclick="showPage('groupsPage')">
-                    عرض الكل
-                </button>
-            </div>
-
-            <div class="groups">
-
-                <div class="group">
-                    <div class="group-icon">➗</div>
-
-                    <div class="group-info">
-                        <h3>الرياضيات</h3>
-                        <p>مجموعة خاصة بمادة الرياضيات</p>
-                        <small>👥 2 أعضاء</small>
-                    </div>
-                </div>
-
-
-                <div class="group">
-                    <div class="group-icon">💻</div>
-
-                    <div class="group-info">
-                        <h3>البرمجة</h3>
-                        <p>مجموعة خاصة بالبرمجة وتطوير الويب</p>
-                        <small>👥 3 أعضاء</small>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- المحاضرات -->
-
-        <div class="section">
-
-            <div class="section-title">
-                <h2>🎥 محاضراتي</h2>
-
-                <button onclick="showPage('lecturesPage')">
-                    عرض الكل
-                </button>
-            </div>
-
-            <div class="lectures">
-
-                <div class="lecture">
-                    <div class="lecture-image">💻</div>
-
-                    <div class="lecture-content">
-                        <h3>مقدمة في JavaScript</h3>
-                        <p>بداية قوية في عالم الجافاسكريبت</p>
-
-                        <button class="watch" onclick="watchLecture('مقدمة في JavaScript')">
-                            ▶ مشاهدة
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="lecture">
-                    <div class="lecture-image">📐</div>
-
-                    <div class="lecture-content">
-                        <h3>الجبر - المحاضرة الأولى</h3>
-                        <p>مفاهيم أساسية في الجبر</p>
-
-                        <button class="watch" onclick="watchLecture('الجبر - المحاضرة الأولى')">
-                            ▶ مشاهدة
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="lecture">
-                    <div class="lecture-image">🌐</div>
-
-                    <div class="lecture-content">
-                        <h3>أساسيات HTML و CSS</h3>
-                        <p>مقدمة في تصميم صفحات الويب</p>
-
-                        <button class="watch" onclick="watchLecture('أساسيات HTML و CSS')">
-                            ▶ مشاهدة
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="card">
+      <div>👥 المجموعات</div>
+      <div class="stat">4</div>
     </div>
 
-
-    <!-- ================= صفحة المجموعات ================= -->
-
-    <div id="groupsPage" class="page">
-
-        <div class="section">
-
-            <div class="section-title">
-                <h2>👥 مجموعاتي</h2>
-            </div>
-
-            <div class="groups">
-
-                <div class="group">
-                    <div class="group-icon">➗</div>
-
-                    <div class="group-info">
-                        <h3>الرياضيات</h3>
-                        <p>مجموعة خاصة بمادة الرياضيات</p>
-                        <small>👥 2 أعضاء</small>
-                    </div>
-                </div>
-
-
-                <div class="group">
-                    <div class="group-icon">💻</div>
-
-                    <div class="group-info">
-                        <h3>البرمجة</h3>
-                        <p>مجموعة خاصة بالبرمجة وتطوير الويب</p>
-                        <small>👥 3 أعضاء</small>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="card">
+      <div>📚 المحاضرات</div>
+      <div class="stat">24</div>
     </div>
 
-
-    <!-- ================= صفحة المحاضرات ================= -->
-
-    <div id="lecturesPage" class="page">
-
-        <div class="section">
-
-            <div class="section-title">
-                <h2>🎥 محاضراتي</h2>
-            </div>
-
-            <div class="lectures">
-
-                <div class="lecture">
-                    <div class="lecture-image">💻</div>
-
-                    <div class="lecture-content">
-                        <h3>مقدمة في JavaScript</h3>
-                        <p>بداية قوية في عالم الجافاسكريبت</p>
-
-                        <button class="watch"
-                                onclick="watchLecture('مقدمة في JavaScript')">
-                            ▶ مشاهدة
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="lecture">
-                    <div class="lecture-image">📐</div>
-
-                    <div class="lecture-content">
-                        <h3>الجبر - المحاضرة الأولى</h3>
-                        <p>مفاهيم أساسية في الجبر</p>
-
-                        <button class="watch"
-                                onclick="watchLecture('الجبر - المحاضرة الأولى')">
-                            ▶ مشاهدة
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="lecture">
-                    <div class="lecture-image">🌐</div>
-
-                    <div class="lecture-content">
-                        <h3>أساسيات HTML و CSS</h3>
-                        <p>مقدمة في تصميم صفحات الويب</p>
-
-                        <button class="watch"
-                                onclick="watchLecture('أساسيات HTML و CSS')">
-                            ▶ مشاهدة
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="card">
+      <div>📝 الاختبارات</div>
+      <div class="stat">8</div>
     </div>
 
-
-    <!-- ================= المكتبة ================= -->
-
-    <div id="libraryPage" class="page">
-
-        <div class="section">
-
-            <h2>📚 المكتبة</h2>
-
-            <br>
-
-            <p>
-                هنا هنضيف الكتب والملفات والمذكرات الخاصة بالمنصة.
-            </p>
-
-        </div>
-
+    <div class="card">
+      <div>🏆 نسبة الإنجاز</div>
+      <div class="stat">72%</div>
     </div>
 
+  </div>
 
-    <!-- ================= الملف الشخصي ================= -->
+  <div class="card">
+    <h2>📈 تقدمي في التعلم</h2>
 
-    <div id="profilePage" class="page">
+    <p style="margin-top:15px">الرياضيات</p>
+    <div class="progress"><div style="width:80%"></div></div>
 
-        <div class="section">
+    <p>اللغة العربية</p>
+    <div class="progress"><div style="width:65%"></div></div>
 
-            <h2>👤 الملف الشخصي</h2>
+    <p>العلوم</p>
+    <div class="progress"><div style="width:55%"></div></div>
 
-            <br>
+  </div>
 
-            <p>الاسم: mano</p>
+</section>
 
-            <br>
 
-            <p>البريد الإلكتروني: example@email.com</p>
+<!-- المجموعات -->
+<section id="groups" class="page">
 
-        </div>
+  <h1>👥 مجموعاتي</h1>
+  <br>
 
+  <div class="grid">
+
+    <div class="card course">
+      <div class="course-img">📐</div>
+      <div class="course-content">
+        <h3>مجموعة الرياضيات</h3>
+        <p class="small">12 محاضرة</p>
+        <button class="btn" onclick="openGroup('الرياضيات')">
+          دخول المجموعة
+        </button>
+      </div>
     </div>
+
+    <div class="card course">
+      <div class="course-img">🔬</div>
+      <div class="course-content">
+        <h3>مجموعة العلوم</h3>
+        <p class="small">8 محاضرات</p>
+        <button class="btn" onclick="openGroup('العلوم')">
+          دخول المجموعة
+        </button>
+      </div>
+    </div>
+
+    <div class="card course">
+      <div class="course-img">📖</div>
+      <div class="course-content">
+        <h3>مجموعة العربي</h3>
+        <p class="small">10 محاضرات</p>
+        <button class="btn" onclick="openGroup('العربي')">
+          دخول المجموعة
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- المحاضرات -->
+<section id="lectures" class="page">
+
+  <h1>📚 محاضراتي</h1>
+  <br>
+
+  <div id="lectureGrid" class="grid">
+
+    <div class="card course searchable">
+      <div class="course-img">🎥</div>
+      <div class="course-content">
+        <h3>المحاضرة الأولى - الرياضيات</h3>
+        <p class="small">شرح أساسيات المادة</p>
+
+        <button class="btn" onclick="watchLecture('المحاضرة الأولى - الرياضيات')">
+          ▶️ مشاهدة
+        </button>
+
+        <button class="btn secondary" onclick="favorite(this)">
+          ❤️ المفضلة
+        </button>
+      </div>
+    </div>
+
+    <div class="card course searchable">
+      <div class="course-img">🎥</div>
+      <div class="course-content">
+        <h3>المحاضرة الثانية - العلوم</h3>
+        <p class="small">شرح الدرس الجديد</p>
+
+        <button class="btn" onclick="watchLecture('المحاضرة الثانية - العلوم')">
+          ▶️ مشاهدة
+        </button>
+
+        <button class="btn secondary" onclick="favorite(this)">
+          ❤️ المفضلة
+        </button>
+      </div>
+    </div>
+
+    <div class="card course searchable">
+      <div class="course-img">📄</div>
+      <div class="course-content">
+        <h3>ملخص اللغة العربية</h3>
+        <p class="small">ملف PDF</p>
+
+        <button class="btn" onclick="openPDF()">
+          📄 فتح الملف
+        </button>
+
+        <button class="btn secondary" onclick="favorite(this)">
+          ❤️ المفضلة
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- الاختبارات -->
+<section id="exams" class="page">
+
+  <h1>📝 الاختبارات</h1>
+  <br>
+
+  <div class="card">
+
+    <h2>اختبار الرياضيات</h2>
+    <p class="small">5 أسئلة</p>
+
+    <div class="question">
+      <b>1- كم يساوي 5 + 5 ؟</b>
+
+      <label class="option">
+        <input type="radio" name="q1" value="10">
+        10
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="15">
+        15
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="20">
+        20
+      </label>
+    </div>
+
+    <div class="question">
+      <b>2- كم يساوي 10 × 2 ؟</b>
+
+      <label class="option">
+        <input type="radio" name="q2" value="20">
+        20
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="30">
+        30
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="12">
+        12
+      </label>
+    </div>
+
+    <button class="btn" onclick="calculateExam()">
+      تصحيح الاختبار
+    </button>
+
+    <h2 id="examResult" style="margin-top:20px"></h2>
+
+  </div>
+
+</section>
+
+
+<!-- المهام -->
+<section id="tasks" class="page">
+
+  <h1>✅ المهام</h1>
+  <br>
+
+  <div class="card">
+
+    <input
+      id="taskInput"
+      placeholder="اكتب مهمة جديدة..."
+      style="padding:12px;width:70%;border:1px solid #ddd;border-radius:8px"
+    >
+
+    <button class="btn" onclick="addTask()">
+      إضافة
+    </button>
+
+    <div id="taskList" style="margin-top:20px"></div>
+
+  </div>
+
+</section>
+
+
+<!-- المفضلة -->
+<section id="favorites" class="page">
+
+  <h1>❤️ المفضلة</h1>
+  <br>
+
+  <div class="card">
+    <p>
+      المحاضرات التي تضيفها للمفضلة ستظهر هنا.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- الملاحظات -->
+<section id="notes" class="page">
+
+  <h1>📝 ملاحظاتي</h1>
+  <br>
+
+  <div class="card">
+
+    <textarea
+      id="notesText"
+      placeholder="اكتب ملاحظاتك هنا..."
+    ></textarea>
+
+    <button class="btn" onclick="saveNotes()">
+      💾 حفظ الملاحظات
+    </button>
+
+    <p id="noteStatus" style="margin-top:12px"></p>
+
+  </div>
+
+</section>
+
+
+<!-- الإشعارات -->
+<section id="notifications" class="page">
+
+  <h1>🔔 الإشعارات</h1>
+  <br>
+
+  <div class="cards">
+
+    <div class="card">
+      📢 تم إضافة محاضرة جديدة.
+    </div>
+
+    <div class="card">
+      📝 لديك اختبار جديد.
+    </div>
+
+    <div class="card">
+      🎥 تم تحديث محتوى مجموعة الرياضيات.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- الإحصائيات -->
+<section id="stats" class="page">
+
+  <h1>📊 الإحصائيات</h1>
+  <br>
+
+  <div class="cards">
+
+    <div class="card">
+      ⏱️ وقت التعلم
+      <div class="stat">12 ساعة</div>
+    </div>
+
+    <div class="card">
+      🎥 محاضرات تمت مشاهدتها
+      <div class="stat">18</div>
+    </div>
+
+    <div class="card">
+      📝 اختبارات
+      <div class="stat">6</div>
+    </div>
+
+    <div class="card">
+      🏆 النقاط
+      <div class="stat">850</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- الإعدادات -->
+<section id="settings" class="page">
+
+  <h1>⚙️ الإعدادات</h1>
+  <br>
+
+  <div class="card">
+
+    <h3>الوضع الليلي</h3>
+
+    <button class="btn" onclick="toggleDark()">
+      تغيير الوضع
+    </button>
+
+    <hr style="margin:20px 0">
+
+    <h3>اسم المنصة</h3>
+    <p>ELmansy</p>
+
+    <hr style="margin:20px 0">
+
+    <h3>بيانات المنصة</h3>
+    <p class="small">
+      منصة تعليمية للمجموعات والمحاضرات والاختبارات والمهام.
+    </p>
+
+  </div>
+
+</section>
+
+</main>
+</div>
+
+
+<!-- النافذة -->
+<div id="modal" class="modal">
+
+  <div class="modal-box">
+
+    <h2 id="modalTitle"></h2>
+
+    <div id="modalContent" style="margin-top:20px"></div>
+
+    <button class="btn" onclick="closeModal()">
+      إغلاق
+    </button>
+
+  </div>
 
 </div>
 
 
 <script>
 
-    // ================= التنقل بين الصفحات =================
+/* التنقل بين الصفحات */
+function showPage(pageId, button){
 
-    function showPage(pageId, button) {
+  document.querySelectorAll('.page').forEach(page=>{
+    page.classList.remove('active');
+  });
 
-        let pages = document.querySelectorAll(".page");
+  const page=document.getElementById(pageId);
 
-        pages.forEach(function(page) {
-            page.classList.remove("active");
-        });
+  if(page){
+    page.classList.add('active');
+  }
 
-        document.getElementById(pageId).classList.add("active");
+  document.querySelectorAll('.menu button').forEach(btn=>{
+    btn.classList.remove('active');
+  });
 
+  if(button){
+    button.classList.add('active');
+  }
 
-        // إزالة التحديد من كل الأزرار
-
-        let buttons = document.querySelectorAll(".menu button");
-
-        buttons.forEach(function(btn) {
-            btn.classList.remove("active");
-        });
-
-
-        // تحديد الزر الحالي
-
-        if (button) {
-            button.classList.add("active");
-        }
-
-    }
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+}
 
 
-    // ================= تشغيل المحاضرة =================
+/* الوضع الليلي */
+function toggleDark(){
 
-    function watchLecture(name) {
+  document.body.classList.toggle('dark');
 
-        alert("🎥 سيتم فتح المحاضرة: " + name);
+  localStorage.setItem(
+    'darkMode',
+    document.body.classList.contains('dark')
+  );
+}
 
-        // بعدين هنخلي الزر يفتح فيديو حقيقي
-        // من Firebase أو YouTube أو الفيديو الموجود عندك
 
-    }
+/* تحميل الوضع المحفوظ */
+if(localStorage.getItem('darkMode') === 'true'){
+  document.body.classList.add('dark');
+}
 
 
-    // ================= البحث =================
+/* فتح المحاضرة */
+function watchLecture(title){
 
-    function searchContent() {
+  document.getElementById('modalTitle').textContent=title;
 
-        let input = document
-            .getElementById("searchInput")
-            .value
-            .toLowerCase();
+  document.getElementById('modalContent').innerHTML=`
 
-        let lectures = document.querySelectorAll(".lecture");
+    <div style="
+      background:#111;
+      height:250px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:60px;
+    ">
+      ▶️
+    </div>
 
-        lectures.forEach(function(lecture) {
+    <h3 style="margin-top:20px">
+      شرح المحاضرة
+    </h3>
 
-            let text = lecture.innerText.toLowerCase();
+    <p style="margin-top:10px">
+      هنا يمكن وضع فيديو المحاضرة الحقيقي لاحقًا.
+    </p>
 
-            if (text.includes(input)) {
-                lecture.style.display = "block";
-            } else {
-                lecture.style.display = "none";
-            }
+    <button class="btn" onclick="markComplete()">
+      ✅ تم الانتهاء
+    </button>
 
-        });
+  `;
 
-    }
+  document.getElementById('modal').classList.add('show');
+}
+
+
+/* فتح PDF */
+function openPDF(){
+
+  document.getElementById('modalTitle').textContent='ملف PDF';
+
+  document.getElementById('modalContent').innerHTML=`
+
+    <div style="
+      padding:50px;
+      text-align:center;
+      background:#f1f3f7;
+      border-radius:12px;
+    ">
+      📄
+      <h3>ملف المحاضرة</h3>
+      <p>هنا يمكن وضع رابط ملف PDF الحقيقي.</p>
+    </div>
+
+  `;
+
+  document.getElementById('modal').classList.add('show');
+}
+
+
+/* إغلاق النافذة */
+function closeModal(){
+
+  document.getElementById('modal').classList.remove('show');
+}
+
+
+/* المجموعة */
+function openGroup(name){
+
+  document.getElementById('modalTitle').textContent=
+    'مجموعة '+name;
+
+  document.getElementById('modalContent').innerHTML=`
+
+    <h3>👥 مجموعة ${name}</h3>
+
+    <p style="margin-top:10px">
+      مرحبًا بك داخل المجموعة.
+    </p>
+
+    <hr style="margin:20px 0">
+
+    <p>📚 المحاضرات: 12</p>
+    <p>📝 الاختبارات: 4</p>
+    <p>📄 الملفات: 8</p>
+
+    <button class="btn"
+      onclick="closeModal();showPage('lectures')">
+      دخول المحاضرات
+    </button>
+
+  `;
+
+  document.getElementById('modal').classList.add('show');
+}
+
+
+/* المفضلة */
+function favorite(button){
+
+  button.textContent='❤️ تمت الإضافة';
+
+  localStorage.setItem('favorite','true');
+}
+
+
+/* إنهاء المحاضرة */
+function markComplete(){
+
+  alert('🎉 ممتاز! تم تسجيل المحاضرة كمكتملة.');
+
+  closeModal();
+}
+
+
+/* الاختبار */
+function calculateExam(){
+
+  let score=0;
+
+  const q1=document.querySelector(
+    'input[name="q1"]:checked'
+  );
+
+  const q2=document.querySelector(
+    'input[name="q2"]:checked'
+  );
+
+  if(q1 && q1.value==='10'){
+    score++;
+  }
+
+  if(q2 && q2.value==='20'){
+    score++;
+  }
+
+  document.getElementById('examResult').textContent=
+    'نتيجتك: '+score+' / 2';
+
+  localStorage.setItem('lastScore',score);
+}
+
+
+/* المهام */
+function addTask(){
+
+  const input=document.getElementById('taskInput');
+
+  const text=input.value.trim();
+
+  if(!text){
+    alert('اكتب المهمة أولاً');
+    return;
+  }
+
+  const task=document.createElement('div');
+
+  task.className='card';
+
+  task.style.marginTop='10px';
+
+  task.innerHTML=`
+
+    <span>⏳ ${text}</span>
+
+    <button
+      class="btn"
+      onclick="this.parentElement.remove()"
+    >
+      ✅ تم
+    </button>
+
+  `;
+
+  document.getElementById('taskList').appendChild(task);
+
+  input.value='';
+}
+
+
+/* الملاحظات */
+function saveNotes(){
+
+  const notes=
+    document.getElementById('notesText').value;
+
+  localStorage.setItem('notes',notes);
+
+  document.getElementById('noteStatus').textContent=
+    '✅ تم حفظ الملاحظات على الجهاز.';
+}
+
+
+/* تحميل الملاحظات */
+const savedNotes=localStorage.getItem('notes');
+
+if(savedNotes){
+
+  document.getElementById('notesText').value=
+    savedNotes;
+}
+
+
+/* البحث */
+function searchContent(){
+
+  const search=
+    document.getElementById('search')
+    .value
+    .toLowerCase();
+
+  document.querySelectorAll('.searchable').forEach(item=>{
+
+    const text=item.textContent.toLowerCase();
+
+    item.style.display=
+      text.includes(search)
+      ? ''
+      : 'none';
+
+  });
+
+  showPage('lectures');
+}
 
 </script>
 
 </body>
 </html>
+```
