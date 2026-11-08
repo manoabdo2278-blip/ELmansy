@@ -1,342 +1,204 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELmansy | المنصة التعليمية</title>
+
+<title>امتحان تانيه باكلوريا | مستر محمد المنسي</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,Tahoma,sans-serif;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  background:#f4f6fb;
-  color:#202535;
-  transition:.3s;
+body {
+  margin: 0;
+  background: #f1f4fa;
+  color: #172033;
+  font-family: Tahoma, Arial, sans-serif;
 }
 
-body.dark{
-  background:#111522;
-  color:#fff;
+header {
+  background: linear-gradient(135deg,#101b40,#263d82,#405bb0);
+  color: white;
+  padding: 35px 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px #17255430;
 }
 
-button,input,textarea,select{
-  font:inherit;
+header h1 {
+  font-size: 27px;
+  margin: 0 0 12px;
 }
 
-button{
-  cursor:pointer;
-  border:0;
+header p {
+  color: #dce5ff;
+  margin: 8px;
+  font-size: 16px;
 }
 
-.app{
-  display:flex;
-  min-height:100vh;
+.teacher-name {
+  margin-top: 15px;
+  padding: 13px 20px;
+  display: inline-block;
+  background: rgba(255,255,255,.13);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
 }
 
-/* القائمة */
-.sidebar{
-  width:250px;
-  background:#171d2f;
-  color:white;
-  padding:20px;
-  position:fixed;
-  right:0;
-  top:0;
-  bottom:0;
-  overflow-y:auto;
+main {
+  max-width: 850px;
+  margin: 25px auto;
+  padding: 0 14px 40px;
 }
 
-.logo{
-  text-align:center;
-  font-size:27px;
-  font-weight:bold;
-  margin-bottom:30px;
+.panel,.question,.result {
+  background: white;
+  border: 1px solid #e4e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 17px;
+  box-shadow: 0 5px 18px #14213d0a;
 }
 
-.logo span{
-  color:#6c8cff;
+.topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: #667085;
+  font-size: 14px;
 }
 
-.menu button{
-  width:100%;
-  padding:14px;
-  margin:5px 0;
-  background:transparent;
-  color:#ddd;
-  text-align:right;
-  border-radius:10px;
+.track {
+  height: 9px;
+  background: #e9edf6;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 13px;
 }
 
-.menu button:hover,
-.menu button.active{
-  background:#293250;
-  color:white;
+.fill {
+  height: 100%;
+  width: 0;
+  background: #405ac0;
+  transition: .3s;
 }
 
-/* المحتوى */
-.main{
-  width:calc(100% - 250px);
-  margin-right:250px;
-  padding:25px;
+.qtitle {
+  font-weight: bold;
+  line-height: 1.9;
+  font-size: 17px;
+  margin-bottom: 15px;
 }
 
-.topbar{
-  background:white;
-  border-radius:15px;
-  padding:15px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:25px;
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid #e4e8f0;
+  border-radius: 11px;
+  padding: 13px;
+  margin: 10px 0;
+  cursor: pointer;
+  line-height: 1.8;
+  transition: .2s;
 }
 
-.dark .topbar,
-.dark .card,
-.dark .modal-box{
-  background:#1b2132;
-  color:white;
+.opt:hover {
+  border-color: #405ac0;
+  background: #f5f7ff;
 }
 
-.search{
-  flex:1;
+.opt input {
+  margin-top: 6px;
+  accent-color: #253b80;
+  transform: scale(1.15);
 }
 
-.search input{
-  width:100%;
-  padding:12px 15px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  outline:none;
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0;
 }
 
-.dark .search input{
-  background:#252c40;
-  color:white;
-  border-color:#444;
+button {
+  border: 0;
+  border-radius: 11px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.icon-btn{
-  background:#eef1ff;
-  padding:11px 14px;
-  border-radius:10px;
+.primary {
+  background: #253b80;
+  color: white;
 }
 
-/* الصفحات */
-.page{
-  display:none;
+.secondary {
+  background: #e7eaf2;
+  color: #26324a;
 }
 
-.page.active{
-  display:block;
+button:hover {
+  opacity: .9;
 }
 
-.hero{
-  background:linear-gradient(135deg,#536dfe,#7c4dff);
-  color:white;
-  padding:35px;
-  border-radius:20px;
-  margin-bottom:25px;
+.note {
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.9;
 }
 
-.hero h1{
-  font-size:32px;
-  margin-bottom:10px;
+.hidden {
+  display: none;
 }
 
-.hero p{
-  opacity:.9;
+.score {
+  font-size: 35px;
+  font-weight: bold;
+  color: #253b80;
 }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:18px;
-  margin:20px 0;
+.review {
+  border-top: 1px solid #e4e8f0;
+  padding: 14px 0;
+  line-height: 2;
 }
 
-.card{
-  background:white;
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 5px 20px rgba(0,0,0,.05);
+.correct {
+  color: #16834a;
+  font-weight: bold;
 }
 
-.stat{
-  font-size:30px;
-  font-weight:bold;
-  margin-top:10px;
+.wrong {
+  color: #c73535;
+  font-weight: bold;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
+.footer {
+  text-align: center;
+  color: #667085;
+  font-size: 13px;
+  padding: 20px;
 }
 
-.course{
-  overflow:hidden;
-  padding:0;
-}
-
-.course-img{
-  height:130px;
-  background:linear-gradient(135deg,#536dfe,#00bcd4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:50px;
-}
-
-.course-content{
-  padding:18px;
-}
-
-.course h3{
-  margin-bottom:8px;
-}
-
-.small{
-  color:#777;
-  font-size:14px;
-}
-
-.dark .small{
-  color:#bbb;
-}
-
-.btn{
-  background:#536dfe;
-  color:white;
-  padding:11px 16px;
-  border-radius:9px;
-  margin-top:12px;
-}
-
-.btn.secondary{
-  background:#eef1ff;
-  color:#536dfe;
-}
-
-.dark .btn.secondary{
-  background:#293250;
-  color:white;
-}
-
-/* التقدم */
-.progress{
-  height:9px;
-  background:#e6e8ee;
-  border-radius:20px;
-  overflow:hidden;
-  margin:10px 0;
-}
-
-.progress div{
-  height:100%;
-  background:#536dfe;
-}
-
-/* الاختبارات */
-.question{
-  margin:20px 0;
-  padding:18px;
-  border:1px solid #ddd;
-  border-radius:12px;
-}
-
-.option{
-  display:block;
-  padding:10px;
-  margin-top:8px;
-  background:#f2f4f8;
-  border-radius:8px;
-}
-
-.dark .option{
-  background:#292f41;
-}
-
-/* الملاحظات */
-textarea{
-  width:100%;
-  min-height:180px;
-  padding:15px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  resize:vertical;
-  outline:none;
-}
-
-.dark textarea{
-  background:#252c40;
-  color:white;
-  border-color:#444;
-}
-
-/* النافذة */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:10;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  background:white;
-  padding:25px;
-  border-radius:18px;
-  width:min(600px,100%);
-  max-height:90vh;
-  overflow:auto;
-}
-
-/* موبايل */
-@media(max-width:800px){
-  .sidebar{
-    width:75px;
-    padding:10px;
+@media(max-width:520px) {
+  header h1 {
+    font-size: 22px;
   }
 
-  .logo{
-    font-size:16px;
+  .panel,.question,.result {
+    padding: 15px;
   }
 
-  .menu button{
-    text-align:center;
-    font-size:0;
-  }
-
-  .menu button::first-letter{
-    font-size:20px;
-  }
-
-  .main{
-    width:calc(100% - 75px);
-    margin-right:75px;
-    padding:12px;
-  }
-
-  .hero h1{
-    font-size:24px;
-  }
-
-  .topbar{
-    flex-wrap:wrap;
+  .qtitle {
+    font-size: 16px;
   }
 }
 </style>
@@ -344,760 +206,349 @@ textarea{
 
 <body>
 
-<div class="app">
+<header>
 
-<!-- القائمة الجانبية -->
-<aside class="sidebar">
+  <h1>امتحان تانيه باكلوريا</h1>
 
-  <div class="logo">
-    <span>EL</span>mansy
+  <p>مادة التاريخ - الوحدة الأولى</p>
+
+  <div class="teacher-name">
+    إنشاء وتصميم مستر محمد المنسي
   </div>
 
-  <div class="menu">
+</header>
 
-    <button class="active" onclick="showPage('home',this)">
-      🏠 الرئيسية
-    </button>
+<main>
 
-    <button onclick="showPage('groups',this)">
-      👥 مجموعاتي
-    </button>
+<section class="panel">
 
-    <button onclick="showPage('lectures',this)">
-      📚 محاضراتي
-    </button>
-
-    <button onclick="showPage('exams',this)">
-      📝 الاختبارات
-    </button>
-
-    <button onclick="showPage('tasks',this)">
-      ✅ المهام
-    </button>
-
-    <button onclick="showPage('favorites',this)">
-      ❤️ المفضلة
-    </button>
-
-    <button onclick="showPage('notes',this)">
-      📝 ملاحظاتي
-    </button>
-
-    <button onclick="showPage('notifications',this)">
-      🔔 الإشعارات
-    </button>
-
-    <button onclick="showPage('stats',this)">
-      📊 الإحصائيات
-    </button>
-
-    <button onclick="showPage('settings',this)">
-      ⚙️ الإعدادات
-    </button>
-
-  </div>
-</aside>
-
-
-<main class="main">
-
-<!-- الشريط العلوي -->
-<div class="topbar">
-
-  <div>
-    👋 أهلاً بك في <b>ELmansy</b>
+  <div class="topline">
+    <span>عدد الأسئلة: 15</span>
+    <span id="progressText">
+      تمت الإجابة عن 0 من 15
+    </span>
   </div>
 
-  <div class="search">
-    <input
-      type="text"
-      id="search"
-      placeholder="🔎 ابحث عن محاضرة أو مادة..."
-      oninput="searchContent()"
-    >
+  <div class="track">
+    <div class="fill" id="progress"></div>
   </div>
 
-  <button class="icon-btn" onclick="toggleDark()">
-    🌙
+  <p class="note">
+    اختر الإجابة الصحيحة لكل سؤال.
+    لن تظهر الإجابات الصحيحة إلا بعد إنهاء الامتحان.
+  </p>
+
+</section>
+
+<div id="quiz"></div>
+
+<div class="actions" id="controls">
+
+  <button class="primary" id="submit">
+    إنهاء وتصحيح الامتحان
+  </button>
+
+  <button class="secondary" id="clear">
+    مسح الإجابات
   </button>
 
 </div>
 
-
-<!-- الرئيسية -->
-<section id="home" class="page active">
-
-  <div class="hero">
-    <h1>منصة ELmansy التعليمية 🎓</h1>
-    <p>
-      مكان واحد للمحاضرات والمجموعات والاختبارات والمهام والملاحظات.
-    </p>
-
-    <button class="btn" onclick="showPage('lectures')">
-      ابدأ التعلم 🚀
-    </button>
-  </div>
-
-  <div class="cards">
-
-    <div class="card">
-      <div>👥 المجموعات</div>
-      <div class="stat">4</div>
-    </div>
-
-    <div class="card">
-      <div>📚 المحاضرات</div>
-      <div class="stat">24</div>
-    </div>
-
-    <div class="card">
-      <div>📝 الاختبارات</div>
-      <div class="stat">8</div>
-    </div>
-
-    <div class="card">
-      <div>🏆 نسبة الإنجاز</div>
-      <div class="stat">72%</div>
-    </div>
-
-  </div>
-
-  <div class="card">
-    <h2>📈 تقدمي في التعلم</h2>
-
-    <p style="margin-top:15px">الرياضيات</p>
-    <div class="progress"><div style="width:80%"></div></div>
-
-    <p>اللغة العربية</p>
-    <div class="progress"><div style="width:65%"></div></div>
-
-    <p>العلوم</p>
-    <div class="progress"><div style="width:55%"></div></div>
-
-  </div>
-
-</section>
-
-
-<!-- المجموعات -->
-<section id="groups" class="page">
-
-  <h1>👥 مجموعاتي</h1>
-  <br>
-
-  <div class="grid">
-
-    <div class="card course">
-      <div class="course-img">📐</div>
-      <div class="course-content">
-        <h3>مجموعة الرياضيات</h3>
-        <p class="small">12 محاضرة</p>
-        <button class="btn" onclick="openGroup('الرياضيات')">
-          دخول المجموعة
-        </button>
-      </div>
-    </div>
-
-    <div class="card course">
-      <div class="course-img">🔬</div>
-      <div class="course-content">
-        <h3>مجموعة العلوم</h3>
-        <p class="small">8 محاضرات</p>
-        <button class="btn" onclick="openGroup('العلوم')">
-          دخول المجموعة
-        </button>
-      </div>
-    </div>
-
-    <div class="card course">
-      <div class="course-img">📖</div>
-      <div class="course-content">
-        <h3>مجموعة العربي</h3>
-        <p class="small">10 محاضرات</p>
-        <button class="btn" onclick="openGroup('العربي')">
-          دخول المجموعة
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- المحاضرات -->
-<section id="lectures" class="page">
-
-  <h1>📚 محاضراتي</h1>
-  <br>
-
-  <div id="lectureGrid" class="grid">
-
-    <div class="card course searchable">
-      <div class="course-img">🎥</div>
-      <div class="course-content">
-        <h3>المحاضرة الأولى - الرياضيات</h3>
-        <p class="small">شرح أساسيات المادة</p>
-
-        <button class="btn" onclick="watchLecture('المحاضرة الأولى - الرياضيات')">
-          ▶️ مشاهدة
-        </button>
-
-        <button class="btn secondary" onclick="favorite(this)">
-          ❤️ المفضلة
-        </button>
-      </div>
-    </div>
-
-    <div class="card course searchable">
-      <div class="course-img">🎥</div>
-      <div class="course-content">
-        <h3>المحاضرة الثانية - العلوم</h3>
-        <p class="small">شرح الدرس الجديد</p>
-
-        <button class="btn" onclick="watchLecture('المحاضرة الثانية - العلوم')">
-          ▶️ مشاهدة
-        </button>
-
-        <button class="btn secondary" onclick="favorite(this)">
-          ❤️ المفضلة
-        </button>
-      </div>
-    </div>
-
-    <div class="card course searchable">
-      <div class="course-img">📄</div>
-      <div class="course-content">
-        <h3>ملخص اللغة العربية</h3>
-        <p class="small">ملف PDF</p>
-
-        <button class="btn" onclick="openPDF()">
-          📄 فتح الملف
-        </button>
-
-        <button class="btn secondary" onclick="favorite(this)">
-          ❤️ المفضلة
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- الاختبارات -->
-<section id="exams" class="page">
-
-  <h1>📝 الاختبارات</h1>
-  <br>
-
-  <div class="card">
-
-    <h2>اختبار الرياضيات</h2>
-    <p class="small">5 أسئلة</p>
-
-    <div class="question">
-      <b>1- كم يساوي 5 + 5 ؟</b>
-
-      <label class="option">
-        <input type="radio" name="q1" value="10">
-        10
-      </label>
-
-      <label class="option">
-        <input type="radio" name="q1" value="15">
-        15
-      </label>
-
-      <label class="option">
-        <input type="radio" name="q1" value="20">
-        20
-      </label>
-    </div>
-
-    <div class="question">
-      <b>2- كم يساوي 10 × 2 ؟</b>
-
-      <label class="option">
-        <input type="radio" name="q2" value="20">
-        20
-      </label>
-
-      <label class="option">
-        <input type="radio" name="q2" value="30">
-        30
-      </label>
-
-      <label class="option">
-        <input type="radio" name="q2" value="12">
-        12
-      </label>
-    </div>
-
-    <button class="btn" onclick="calculateExam()">
-      تصحيح الاختبار
-    </button>
-
-    <h2 id="examResult" style="margin-top:20px"></h2>
-
-  </div>
-
-</section>
-
-
-<!-- المهام -->
-<section id="tasks" class="page">
-
-  <h1>✅ المهام</h1>
-  <br>
-
-  <div class="card">
-
-    <input
-      id="taskInput"
-      placeholder="اكتب مهمة جديدة..."
-      style="padding:12px;width:70%;border:1px solid #ddd;border-radius:8px"
-    >
-
-    <button class="btn" onclick="addTask()">
-      إضافة
-    </button>
-
-    <div id="taskList" style="margin-top:20px"></div>
-
-  </div>
-
-</section>
-
-
-<!-- المفضلة -->
-<section id="favorites" class="page">
-
-  <h1>❤️ المفضلة</h1>
-  <br>
-
-  <div class="card">
-    <p>
-      المحاضرات التي تضيفها للمفضلة ستظهر هنا.
-    </p>
-  </div>
-
-</section>
-
-
-<!-- الملاحظات -->
-<section id="notes" class="page">
-
-  <h1>📝 ملاحظاتي</h1>
-  <br>
-
-  <div class="card">
-
-    <textarea
-      id="notesText"
-      placeholder="اكتب ملاحظاتك هنا..."
-    ></textarea>
-
-    <button class="btn" onclick="saveNotes()">
-      💾 حفظ الملاحظات
-    </button>
-
-    <p id="noteStatus" style="margin-top:12px"></p>
-
-  </div>
-
-</section>
-
-
-<!-- الإشعارات -->
-<section id="notifications" class="page">
-
-  <h1>🔔 الإشعارات</h1>
-  <br>
-
-  <div class="cards">
-
-    <div class="card">
-      📢 تم إضافة محاضرة جديدة.
-    </div>
-
-    <div class="card">
-      📝 لديك اختبار جديد.
-    </div>
-
-    <div class="card">
-      🎥 تم تحديث محتوى مجموعة الرياضيات.
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- الإحصائيات -->
-<section id="stats" class="page">
-
-  <h1>📊 الإحصائيات</h1>
-  <br>
-
-  <div class="cards">
-
-    <div class="card">
-      ⏱️ وقت التعلم
-      <div class="stat">12 ساعة</div>
-    </div>
-
-    <div class="card">
-      🎥 محاضرات تمت مشاهدتها
-      <div class="stat">18</div>
-    </div>
-
-    <div class="card">
-      📝 اختبارات
-      <div class="stat">6</div>
-    </div>
-
-    <div class="card">
-      🏆 النقاط
-      <div class="stat">850</div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- الإعدادات -->
-<section id="settings" class="page">
-
-  <h1>⚙️ الإعدادات</h1>
-  <br>
-
-  <div class="card">
-
-    <h3>الوضع الليلي</h3>
-
-    <button class="btn" onclick="toggleDark()">
-      تغيير الوضع
-    </button>
-
-    <hr style="margin:20px 0">
-
-    <h3>اسم المنصة</h3>
-    <p>ELmansy</p>
-
-    <hr style="margin:20px 0">
-
-    <h3>بيانات المنصة</h3>
-    <p class="small">
-      منصة تعليمية للمجموعات والمحاضرات والاختبارات والمهام.
-    </p>
-
-  </div>
-
-</section>
+<section class="result hidden" id="result"></section>
 
 </main>
+
+<div class="footer">
+  جميع الحقوق محفوظة © مستر محمد المنسي
 </div>
-
-
-<!-- النافذة -->
-<div id="modal" class="modal">
-
-  <div class="modal-box">
-
-    <h2 id="modalTitle"></h2>
-
-    <div id="modalContent" style="margin-top:20px"></div>
-
-    <button class="btn" onclick="closeModal()">
-      إغلاق
-    </button>
-
-  </div>
-
-</div>
-
 
 <script>
 
-/* التنقل بين الصفحات */
-function showPage(pageId, button){
+// =================================
+// مفتاح الإجابات والأسئلة
+// =================================
 
-  document.querySelectorAll('.page').forEach(page=>{
-    page.classList.remove('active');
-  });
+const questions = [
 
-  const page=document.getElementById(pageId);
+{
+q:"ما الفرق الجوهري بين المجتمع والدولة؟",
+o:["الحيز الجغرافي","السلطة المنظمة","التجانس البشري","الموارد الطبيعية"],
+a:1
+},
 
-  if(page){
-    page.classList.add('active');
-  }
+{
+q:"استلزمت عملية إدارة مياه نهر النيل وتنظيم الري في مصر القديمة حتمية ظهور:",
+o:["الحدود السياسية","الجيش النظامي","السلطة المركزية","التوسع الخارجي"],
+a:2
+},
 
-  document.querySelectorAll('.menu button').forEach(btn=>{
-    btn.classList.remove('active');
-  });
+{
+q:"ينص الدستور على أن مصر دولة ذات سيادة موحدة لا تقبل التجزئة. يعبر هذا النص بالأساس عن مفهوم:",
+o:["القوة العسكرية","التجانس الثقافي","التضامن الاجتماعي","السيادة المطلقة"],
+a:3
+},
 
-  if(button){
-    button.classList.add('active');
-  }
+{
+q:"بدأت حرب التحرير بتوسع الملك سقنن رع شمالاً حتى القوصية، ويعكس هذا الإجراء مبدأ مهماً وهو:",
+o:["أسلوب الحرب الخاطفة لحسم المعركة في يوم واحد","بناء القوة وتوسيع نفوذ المقاومة بالتدريج والتخطيط","الدفاع المستميت دون تحريك خطوط القتال","عقد تحالفات عسكرية مع القوى الخارجية"],
+a:1
+},
 
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
+{
+q:"يرجع المؤرخون سقوط مصر في أيدي الفرس عام 525 ق.م في المقام الأول إلى:",
+o:["الاضطراب السياسي والصراع الداخلي","استسلام الملك أحمس الأول","كثرة العجلات الحربية لدى الفرس","التحالف الفارسي الإغريقي"],
+a:0
+},
+
+{
+q:"تحول مصر عام 641م من الحكم البيزنطي إلى الولاية الإسلامية يمثل تغيراً في:",
+o:["البنية السياسية والإدارية","التركيبة الديموغرافية فوراً","الهوية الدينية فقط","النظام الاقتصادي الزراعي"],
+a:0
+},
+
+{
+q:"اتخاذ أحمد بن طولون من مدينة القطائع مقراً للحكم يعبر عن بداية مرحلة:",
+o:["الاستقلال السياسي عن العباسيين","الاندفاع نحو البحر المتوسط","التبعية المطلقة لدمشق","التحول لولاية عثمانية"],
+a:0
+},
+
+{
+q:"اتجاه محمد علي لبناء جيش نظامي حديث وتطوير الإدارة هدف أساساً إلى:",
+o:["الانضمام للحلف الأوروبي","تحويل مصر لكيان سياسي أكثر استقلالاً","إلغاء البعثات العلمية للخارج","تثبيت التبعية المطلقة للسلطان"],
+a:1
+},
+
+{
+q:"حصول الخديوي إسماعيل على تغيير نظام وراثة الحكم في أكبر أبنائه ترتب عليه:",
+o:["إنهاء أزمة الديون الخارجية فوراً","وضع سياسي أكثر استقلالاً داخلياً","إلغاء الامتيازات الأجنبية","خروج مصر من مظلة القناطر الخيرية"],
+a:1
+},
+
+{
+q:"تمثلت الطبقة الدنيا في الهرم الاجتماعي المصري أواخر القرن 19 في:",
+o:["كبار التجار والمحامين","الفلاحين المعدمين والعمال الموسميين","صغار التجار والحرفيين","أصحاب المصانع والرأسماليين"],
+a:1
+},
+
+{
+q:"المسجد الكبير في عواصم الإسلام لم يكن مجرد دار للعبادة، بل جامعة مركزية. يتفق ذلك مع أحوال مصر في العصر الوسيط من حيث:",
+o:["شمولية أدوار المؤسسات الدينية","اقتصار التعليم على الفسطاط","التنافس بين العلوم الشرعية","ملاحقة العلماء والمراكز العلمية"],
+a:0
+},
+
+{
+q:"أي مما يلي يعد دليلاً على تحقيق مقولة أن ثورة 1919 هزت وعي الأمة؟",
+o:["تصفية الوجود البريطاني","الإرادة الشعبية الوطنية","الاستعانة بالقوى الخارجية","إزالة الفوارق الطائفية والطبقية"],
+a:1
+},
+
+{
+q:"ما الركن الأساسي الذي يضمن تنظيم العلاقة بين الشعب والحيز الجغرافي ويكسب الدولة قدرتها على فرض إرادتها؟",
+o:["الإقامة الدائمة والمستقرة للشعب","امتلاك حيز جغرافي واسع ومحدد","وجود سلطة منظمة تمتلك السيادة","التجانس الثقافي بين أفراد الشعب"],
+a:2
+},
+
+{
+q:"أكد الدستور على تنوع انتماءات مصر العربية والأفريقية والآسيوية والإسلامية. يعكس هذا التنوع:",
+o:["اتساع دوائر التأثير والارتباط الخارجي","اقتصار الدور المصري على الجانب الثقافي","تغليب الهوية القارية على باقي الهويات","التناقض بين الانتماء المحلي والدولي"],
+a:0
+},
+
+{
+q:"تعبر الصورة التي تضم الشعب والحيز الجغرافي والسلطة والسيادة عن:",
+o:["المقومات المشتركة بين الأمة والدولة","المظاهر المؤسسية لإدارة الشؤون الداخلية","أهمية تطبيق مبدأ الفصل بين السلطات","الأسس الضرورية لإعلان ميلاد وحدة سياسية"],
+a:3
 }
 
+];
 
-/* الوضع الليلي */
-function toggleDark(){
+// =================================
+// عرض الأسئلة للطالب
+// =================================
 
-  document.body.classList.toggle('dark');
+const quiz = document.getElementById("quiz");
 
-  localStorage.setItem(
-    'darkMode',
-    document.body.classList.contains('dark')
-  );
+questions.forEach((item,i)=>{
+
+  const section = document.createElement("section");
+  section.className = "question";
+
+  const title = document.createElement("p");
+  title.className = "qtitle";
+
+  title.textContent =
+    `السؤال ${i+1}: ${item.q}`;
+
+  section.appendChild(title);
+
+  item.o.forEach((option,j)=>{
+
+    const label = document.createElement("label");
+    label.className = "opt";
+
+    const radio = document.createElement("input");
+
+    radio.type = "radio";
+    radio.name = `q${i}`;
+    radio.value = j;
+
+    radio.addEventListener("change",updateProgress);
+
+    const span = document.createElement("span");
+    span.textContent = option;
+
+    label.append(radio,span);
+
+    section.appendChild(label);
+
+  });
+
+  quiz.appendChild(section);
+
+});
+
+// =================================
+// تحديث شريط التقدم
+// =================================
+
+function updateProgress(){
+
+  const count = questions.filter((q,i)=>
+    document.querySelector(
+      `input[name="q${i}"]:checked`
+    )
+  ).length;
+
+  document.getElementById("progressText").textContent =
+    `تمت الإجابة عن ${count} من ${questions.length}`;
+
+  document.getElementById("progress").style.width =
+    (count/questions.length*100)+"%";
+
 }
 
+// =================================
+// تصحيح الامتحان
+// =================================
 
-/* تحميل الوضع المحفوظ */
-if(localStorage.getItem('darkMode') === 'true'){
-  document.body.classList.add('dark');
-}
+document.getElementById("submit").addEventListener("click",()=>{
 
+  const unanswered = questions.filter((q,i)=>
+    !document.querySelector(
+      `input[name="q${i}"]:checked`
+    )
+  ).length;
 
-/* فتح المحاضرة */
-function watchLecture(title){
+  if(unanswered && !confirm(
+    `يوجد ${unanswered} سؤال بدون إجابة. هل تريد التصحيح؟`
+  )) return;
 
-  document.getElementById('modalTitle').textContent=title;
+  let score = 0;
+  let review = "";
 
-  document.getElementById('modalContent').innerHTML=`
+  questions.forEach((q,i)=>{
 
-    <div style="
-      background:#111;
-      height:250px;
-      border-radius:12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:white;
-      font-size:60px;
-    ">
-      ▶️
+    const chosen = document.querySelector(
+      `input[name="q${i}"]:checked`
+    );
+
+    const val = chosen ? Number(chosen.value) : -1;
+
+    const ok = val === q.a;
+
+    if(ok) score++;
+
+    review += `
+
+      <div class="review">
+
+        <strong>السؤال ${i+1}</strong>
+
+        <br>
+
+        ${ok
+          ? '<span class="correct">إجابة صحيحة ✓</span>'
+          : '<span class="wrong">إجابة غير صحيحة ✗</span>'
+        }
+
+        <br>
+
+        إجابتك:
+        ${val<0 ? "لم تتم الإجابة" : q.o[val]}
+
+        <br>
+
+        الإجابة الصحيحة:
+
+        <span class="correct">
+          ${q.o[q.a]}
+        </span>
+
+      </div>
+
+    `;
+
+  });
+
+  const result = document.getElementById("result");
+
+  result.innerHTML = `
+
+    <h2>نتيجة امتحان تانيه باكلوريا</h2>
+
+    <div class="score">
+      ${score} / ${questions.length}
     </div>
 
-    <h3 style="margin-top:20px">
-      شرح المحاضرة
-    </h3>
-
-    <p style="margin-top:10px">
-      هنا يمكن وضع فيديو المحاضرة الحقيقي لاحقًا.
+    <p>
+      النسبة المئوية:
+      ${Math.round(score/questions.length*100)}%
     </p>
 
-    <button class="btn" onclick="markComplete()">
-      ✅ تم الانتهاء
-    </button>
+    <h3>مراجعة الإجابات</h3>
 
-  `;
+    ${review}
 
-  document.getElementById('modal').classList.add('show');
-}
-
-
-/* فتح PDF */
-function openPDF(){
-
-  document.getElementById('modalTitle').textContent='ملف PDF';
-
-  document.getElementById('modalContent').innerHTML=`
-
-    <div style="
-      padding:50px;
-      text-align:center;
-      background:#f1f3f7;
-      border-radius:12px;
-    ">
-      📄
-      <h3>ملف المحاضرة</h3>
-      <p>هنا يمكن وضع رابط ملف PDF الحقيقي.</p>
-    </div>
-
-  `;
-
-  document.getElementById('modal').classList.add('show');
-}
-
-
-/* إغلاق النافذة */
-function closeModal(){
-
-  document.getElementById('modal').classList.remove('show');
-}
-
-
-/* المجموعة */
-function openGroup(name){
-
-  document.getElementById('modalTitle').textContent=
-    'مجموعة '+name;
-
-  document.getElementById('modalContent').innerHTML=`
-
-    <h3>👥 مجموعة ${name}</h3>
-
-    <p style="margin-top:10px">
-      مرحبًا بك داخل المجموعة.
+    <p>
+      إنشاء وتصميم مستر محمد المنسي
     </p>
 
-    <hr style="margin:20px 0">
-
-    <p>📚 المحاضرات: 12</p>
-    <p>📝 الاختبارات: 4</p>
-    <p>📄 الملفات: 8</p>
-
-    <button class="btn"
-      onclick="closeModal();showPage('lectures')">
-      دخول المحاضرات
+    <button class="primary" id="retry">
+      إعادة الامتحان
     </button>
 
   `;
 
-  document.getElementById('modal').classList.add('show');
-}
+  result.classList.remove("hidden");
 
+  document.getElementById("controls").classList.add("hidden");
 
-/* المفضلة */
-function favorite(button){
+  result.scrollIntoView({behavior:"smooth"});
 
-  button.textContent='❤️ تمت الإضافة';
-
-  localStorage.setItem('favorite','true');
-}
-
-
-/* إنهاء المحاضرة */
-function markComplete(){
-
-  alert('🎉 ممتاز! تم تسجيل المحاضرة كمكتملة.');
-
-  closeModal();
-}
-
-
-/* الاختبار */
-function calculateExam(){
-
-  let score=0;
-
-  const q1=document.querySelector(
-    'input[name="q1"]:checked'
-  );
-
-  const q2=document.querySelector(
-    'input[name="q2"]:checked'
-  );
-
-  if(q1 && q1.value==='10'){
-    score++;
-  }
-
-  if(q2 && q2.value==='20'){
-    score++;
-  }
-
-  document.getElementById('examResult').textContent=
-    'نتيجتك: '+score+' / 2';
-
-  localStorage.setItem('lastScore',score);
-}
-
-
-/* المهام */
-function addTask(){
-
-  const input=document.getElementById('taskInput');
-
-  const text=input.value.trim();
-
-  if(!text){
-    alert('اكتب المهمة أولاً');
-    return;
-  }
-
-  const task=document.createElement('div');
-
-  task.className='card';
-
-  task.style.marginTop='10px';
-
-  task.innerHTML=`
-
-    <span>⏳ ${text}</span>
-
-    <button
-      class="btn"
-      onclick="this.parentElement.remove()"
-    >
-      ✅ تم
-    </button>
-
-  `;
-
-  document.getElementById('taskList').appendChild(task);
-
-  input.value='';
-}
-
-
-/* الملاحظات */
-function saveNotes(){
-
-  const notes=
-    document.getElementById('notesText').value;
-
-  localStorage.setItem('notes',notes);
-
-  document.getElementById('noteStatus').textContent=
-    '✅ تم حفظ الملاحظات على الجهاز.';
-}
-
-
-/* تحميل الملاحظات */
-const savedNotes=localStorage.getItem('notes');
-
-if(savedNotes){
-
-  document.getElementById('notesText').value=
-    savedNotes;
-}
-
-
-/* البحث */
-function searchContent(){
-
-  const search=
-    document.getElementById('search')
-    .value
-    .toLowerCase();
-
-  document.querySelectorAll('.searchable').forEach(item=>{
-
-    const text=item.textContent.toLowerCase();
-
-    item.style.display=
-      text.includes(search)
-      ? ''
-      : 'none';
-
+  document.getElementById("retry").addEventListener("click",()=>{
+    location.reload();
   });
 
-  showPage('lectures');
-}
+});
+
+// =================================
+// مسح الإجابات
+// =================================
+
+document.getElementById("clear").addEventListener("click",()=>{
+
+  if(confirm("هل تريد مسح جميع الإجابات؟")){
+
+    document.querySelectorAll('input[type="radio"]')
+      .forEach(x=>x.checked=false);
+
+    updateProgress();
+
+  }
+
+});
 
 </script>
 
 </body>
 </html>
-```
