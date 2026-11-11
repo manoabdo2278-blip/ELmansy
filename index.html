@@ -1,554 +1,623 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>امتحان تانيه باكلوريا | مستر محمد المنسي</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MANO MUSLIM PRO</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: #f1f4fa;
-  color: #172033;
-  font-family: Tahoma, Arial, sans-serif;
-}
-
-header {
-  background: linear-gradient(135deg,#101b40,#263d82,#405bb0);
-  color: white;
-  padding: 35px 15px;
-  text-align: center;
-  box-shadow: 0 5px 20px #17255430;
-}
-
-header h1 {
-  font-size: 27px;
-  margin: 0 0 12px;
-}
-
-header p {
-  color: #dce5ff;
-  margin: 8px;
-  font-size: 16px;
-}
-
-.teacher-name {
-  margin-top: 15px;
-  padding: 13px 20px;
-  display: inline-block;
-  background: rgba(255,255,255,.13);
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-}
-
-main {
-  max-width: 850px;
-  margin: 25px auto;
-  padding: 0 14px 40px;
-}
-
-.panel,.question,.result {
-  background: white;
-  border: 1px solid #e4e8f0;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 17px;
-  box-shadow: 0 5px 18px #14213d0a;
-}
-
-.topline {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  color: #667085;
-  font-size: 14px;
-}
-
-.track {
-  height: 9px;
-  background: #e9edf6;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 13px;
-}
-
-.fill {
-  height: 100%;
-  width: 0;
-  background: #405ac0;
-  transition: .3s;
-}
-
-.qtitle {
-  font-weight: bold;
-  line-height: 1.9;
-  font-size: 17px;
-  margin-bottom: 15px;
-}
-
-.opt {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  border: 1px solid #e4e8f0;
-  border-radius: 11px;
-  padding: 13px;
-  margin: 10px 0;
-  cursor: pointer;
-  line-height: 1.8;
-  transition: .2s;
-}
-
-.opt:hover {
-  border-color: #405ac0;
-  background: #f5f7ff;
-}
-
-.opt input {
-  margin-top: 6px;
-  accent-color: #253b80;
-  transform: scale(1.15);
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 18px 0;
-}
-
-button {
-  border: 0;
-  border-radius: 11px;
-  padding: 14px 20px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.primary {
-  background: #253b80;
-  color: white;
-}
-
-.secondary {
-  background: #e7eaf2;
-  color: #26324a;
-}
-
-button:hover {
-  opacity: .9;
-}
-
-.note {
-  color: #667085;
-  font-size: 13px;
-  line-height: 1.9;
-}
-
-.hidden {
-  display: none;
-}
-
-.score {
-  font-size: 35px;
-  font-weight: bold;
-  color: #253b80;
-}
-
-.review {
-  border-top: 1px solid #e4e8f0;
-  padding: 14px 0;
-  line-height: 2;
-}
-
-.correct {
-  color: #16834a;
-  font-weight: bold;
-}
-
-.wrong {
-  color: #c73535;
-  font-weight: bold;
-}
-
-.footer {
-  text-align: center;
-  color: #667085;
-  font-size: 13px;
-  padding: 20px;
-}
-
-@media(max-width:520px) {
-  header h1 {
-    font-size: 22px;
-  }
-
-  .panel,.question,.result {
-    padding: 15px;
-  }
-
-  .qtitle {
-    font-size: 16px;
-  }
-}
+:root{--bg:#f2f7f4;--card:#fff;--txt:#18372d;--muted:#72847a;--main:#087b58;--line:#dfeae3}
+.dark{--bg:#101b17;--card:#1b2b24;--txt:#edf7f0;--muted:#b3c4ba;--main:#38b98b;--line:#34483d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:Tahoma,Arial;transition:.2s}
+header{background:linear-gradient(130deg,#064d38,#0c9b6c);color:white;text-align:center;padding:25px 12px}
+header h1{margin:0 0 8px;font-size:27px}
+header p{margin:0}
+nav{display:flex;gap:7px;padding:10px;background:var(--card);overflow:auto;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0001}
+button{border:0;border-radius:10px;padding:11px 14px;background:var(--main);color:white;cursor:pointer;font-weight:bold}
+button.gray{background:#718078}
+button.light{background:#e4f3eb;color:#075b40}
+nav button{white-space:nowrap}
+main{max-width:1050px;margin:auto;padding:14px}
+.page{display:none}.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px;margin:12px 0;box-shadow:0 3px 12px #00000008}
+h2{color:var(--main);margin-top:5px}
+h3{margin-bottom:8px}
+.small{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.tile{background:var(--bg);border:1px solid var(--line);padding:15px;border-radius:12px;text-align:center}
+.tile strong{display:block;color:var(--main);font-size:19px;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--txt);margin:6px 0;font:inherit}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{flex:1}
+.ayah{font-family:"Traditional Arabic",Tahoma;font-size:24px;line-height:2.2;text-align:center;padding:15px 5px;border-bottom:1px solid var(--line)}
+.ayah button{font-family:Tahoma;font-size:13px}
+.item{padding:14px;border-bottom:1px solid var(--line);line-height:2}
+.item:last-child{border:0}
+.arabic{font-family:"Traditional Arabic",Tahoma;font-size:21px;line-height:2}
+.center{text-align:center}
+.counter{font-size:65px;color:var(--main);font-weight:bold;text-align:center;padding:18px}
+audio{width:100%;margin:10px 0}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px;color:var(--muted)}
+.badge{background:var(--bg);padding:5px 9px;border-radius:20px;color:var(--main);font-size:12px}
+.favorite{background:#a56b13}
+hr{border:0;border-top:1px solid var(--line);margin:15px 0}
 </style>
 </head>
-
 <body>
-
 <header>
-
-  <h1>امتحان تانيه باكلوريا</h1>
-
-  <p>مادة التاريخ - الوحدة الأولى</p>
-
-  <div class="teacher-name">
-    إنشاء وتصميم مستر محمد المنسي
-  </div>
-
+<h1>☪ MANO MUSLIM PRO</h1>
+<p>رفيقك في القرآن والصلاة والذكر</p>
+<div id="date" style="margin-top:12px"></div>
 </header>
+
+<nav>
+<button onclick="page('home',this)" class="active">الرئيسية</button>
+<button onclick="page('quran',this)">القرآن</button>
+<button onclick="page('prayer',this)">الصلاة</button>
+<button onclick="page('azkar',this)">الأذكار</button>
+<button onclick="page('duas',this)">الأدعية</button>
+<button onclick="page('hadith',this)">الأحاديث</button>
+<button onclick="page('names',this)">أسماء الله</button>
+<button onclick="page('tasbeeh',this)">السبحة</button>
+<button onclick="page('qibla',this)">القبلة</button>
+<button onclick="page('favorites',this)">المفضلة</button>
+<button onclick="page('settings',this)">الإعدادات</button>
+</nav>
 
 <main>
 
-<section class="panel">
-
-  <div class="topline">
-    <span>عدد الأسئلة: 15</span>
-    <span id="progressText">
-      تمت الإجابة عن 0 من 15
-    </span>
-  </div>
-
-  <div class="track">
-    <div class="fill" id="progress"></div>
-  </div>
-
-  <p class="note">
-    اختر الإجابة الصحيحة لكل سؤال.
-    لن تظهر الإجابات الصحيحة إلا بعد إنهاء الامتحان.
-  </p>
-
+<section id="home" class="page active">
+<div class="card center">
+<h2>السلام عليكم ورحمة الله وبركاته 🌙</h2>
+<p>أهلاً بك في MANO MUSLIM PRO</p>
+<p>ابدأ يومك بذكر الله وقراءة القرآن.</p>
+</div>
+<div class="grid">
+<div class="tile"><strong id="nextPrayer">--</strong>الصلاة القادمة</div>
+<div class="tile"><strong id="homeCount">0</strong>التسبيحات</div>
+<div class="tile"><strong id="readCount">0</strong>السور التي فتحتها</div>
+<div class="tile"><strong id="favCount">0</strong>المفضلة</div>
+</div>
+<div class="card">
+<h2>آية اليوم</h2>
+<p class="arabic center">﴿أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ﴾</p>
+<p class="small center">سورة الرعد - الآية 28</p>
+</div>
+<div class="card">
+<h2>دعاء اليوم</h2>
+<p class="arabic center">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</p>
+</div>
 </section>
 
-<div id="quiz"></div>
-
-<div class="actions" id="controls">
-
-  <button class="primary" id="submit">
-    إنهاء وتصحيح الامتحان
-  </button>
-
-  <button class="secondary" id="clear">
-    مسح الإجابات
-  </button>
-
+<section id="quran" class="page">
+<div class="card">
+<h2>📖 القرآن الكريم</h2>
+<label>اختر القارئ</label>
+<select id="reciter" onchange="changeReciter()">
+<option value="ar.alafasy">مشاري العفاسي</option>
+<option value="ar.abdulbasit">عبد الباسط عبد الصمد - مرتل</option>
+<option value="ar.husary">محمود خليل الحصري</option>
+<option value="ar.minshawi">محمد صديق المنشاوي</option>
+<option value="ar.mahermuaiqly">ماهر المعيقلي</option>
+<option value="ar.abdurrahmaansudais">عبد الرحمن السديس</option>
+<option value="ar.shaatree">أبو بكر الشاطري</option>
+<option value="ar.saoodshuraym">سعود الشريم</option>
+</select>
+<p class="small" id="readerStatus">اختر قارئك المفضل.</p>
+<input id="surahSearch" placeholder="ابحث عن سورة..." oninput="filterSurahs()">
 </div>
+<div id="surahList" class="card">جاري تحميل السور...</div>
+<div id="reader" class="card hidden">
+<button class="gray" onclick="backSurahs()">رجوع للسور</button>
+<h2 id="surahTitle"></h2>
+<p id="surahInfo" class="small"></p>
+<div class="row">
+<button onclick="playWhole()">▶ تشغيل السورة كاملة</button>
+<button class="gray" onclick="stopAudio()">إيقاف</button>
+</div>
+<audio id="qAudio" controls></audio>
+<p id="audioStatus" class="small"></p>
+<div id="ayahList"></div>
+</div>
+</section>
 
-<section class="result hidden" id="result"></section>
+<section id="prayer" class="page">
+<div class="card">
+<h2>🕌 مواقيت الصلاة</h2>
+<p id="locationText">الموقع الافتراضي: القاهرة</p>
+<button onclick="getLocation()">تحديد موقعي</button>
+<div id="hijri" class="small"></div>
+<div class="grid" id="prayerGrid"></div>
+</div>
+<div class="card">
+<h2>🔔 تنبيهات الصلاة</h2>
+<p>تنبيه قبل الصلاة بعشر دقائق، وتنبيه عند دخول الوقت.</p>
+<button onclick="enableNotify()">تفعيل الإشعارات</button>
+<p class="small" id="notifyStatus">لم يتم تفعيل الإشعارات.</p>
+<hr>
+<h3>ملف الأذان</h3>
+<p class="small">اختر ملف أذان من جهازك ليعمل عند دخول وقت الصلاة.</p>
+<input type="file" id="adhanFile" accept="audio/*">
+<audio id="adhanAudio" controls></audio>
+</div>
+</section>
 
+<section id="azkar" class="page">
+<div class="card">
+<h2>🤲 الأذكار</h2>
+<select id="azkarType" onchange="renderAzkar()">
+<option value="morning">أذكار الصباح</option>
+<option value="evening">أذكار المساء</option>
+<option value="after">أذكار بعد الصلاة</option>
+<option value="sleep">أذكار النوم</option>
+<option value="wake">أذكار الاستيقاظ</option>
+</select>
+<div id="azkarList"></div>
+</div>
+</section>
+
+<section id="duas" class="page">
+<div class="card">
+<h2>💚 مكتبة الأدعية</h2>
+<select id="duaCategory" onchange="renderDuas()">
+<option value="all">كل الأدعية</option>
+<option value="quran">أدعية من القرآن</option>
+<option value="rizq">الرزق والبركة</option>
+<option value="faraj">الفرج وتيسير الأمور</option>
+<option value="parents">الوالدان والأسرة</option>
+<option value="forgiveness">التوبة والاستغفار</option>
+<option value="health">العافية والشفاء</option>
+<option value="travel">السفر والحفظ</option>
+</select>
+<div id="duasList"></div>
+</div>
+</section>
+
+<section id="hadith" class="page">
+<div class="card">
+<h2>📚 أحاديث نبوية</h2>
+<p class="small">أحاديث مختارة مع مصادرها. لا تنسب حديثاً للنبي ﷺ دون التحقق من درجته.</p>
+<input id="hadithSearch" placeholder="ابحث في الأحاديث..." oninput="renderHadith()">
+<div id="hadithList"></div>
+</div>
+</section>
+
+<section id="names" class="page">
+<div class="card">
+<h2>✨ أسماء الله الحسنى</h2>
+<div id="namesList" class="grid"></div>
+</div>
+</section>
+
+<section id="tasbeeh" class="page">
+<div class="card center">
+<h2>📿 السبحة الإلكترونية</h2>
+<div id="counter" class="counter">0</div>
+<button style="font-size:22px;padding:18px 35px" onclick="addCount()">سبّح</button>
+<button class="gray" onclick="resetCount()">تصفير</button>
+<p class="small">عدد التسبيحات محفوظ على جهازك.</p>
+</div>
+</section>
+
+<section id="qibla" class="page">
+<div class="card center">
+<h2>🧭 اتجاه القبلة</h2>
+<p>اسمح بالوصول إلى موقعك لحساب اتجاه القبلة.</p>
+<button onclick="calculateQibla()">تحديد اتجاه القبلة</button>
+<div id="qiblaResult" class="arabic" style="font-size:25px;margin:25px"></div>
+<p class="small">النتيجة زاوية من الشمال باتجاه عقارب الساعة. استخدم بوصلة الهاتف بعد معايرتها.</p>
+</div>
+</section>
+
+<section id="favorites" class="page">
+<div class="card">
+<h2>⭐ المفضلة</h2>
+<div id="favoritesList"></div>
+</div>
+</section>
+
+<section id="settings" class="page">
+<div class="card">
+<h2>⚙️ الإعدادات</h2>
+<button onclick="toggleDark()">🌙 تبديل الوضع الليلي</button>
+<hr>
+<button class="gray" onclick="exportData()">حفظ نسخة احتياطية</button>
+<button class="gray" onclick="importData()">استعادة نسخة احتياطية</button>
+<input type="file" id="backupFile" accept="application/json" class="hidden">
+<p class="small">بياناتك محفوظة محلياً في المتصفح على هذا الجهاز.</p>
+</div>
+</section>
 </main>
 
-<div class="footer">
-  جميع الحقوق محفوظة © مستر محمد المنسي
-</div>
+<footer>MANO MUSLIM PRO © 2026</footer>
 
 <script>
+const $=id=>document.getElementById(id);
+function page(id,btn){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ $(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ if(id==='azkar')renderAzkar();
+ if(id==='duas')renderDuas();
+ if(id==='hadith')renderHadith();
+ if(id==='favorites')renderFavorites();
+}
+$('date').textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-// =================================
-// مفتاح الإجابات والأسئلة
-// =================================
-
-const questions = [
-
-{
-q:"ما الفرق الجوهري بين المجتمع والدولة؟",
-o:["الحيز الجغرافي","السلطة المنظمة","التجانس البشري","الموارد الطبيعية"],
-a:1
-},
-
-{
-q:"استلزمت عملية إدارة مياه نهر النيل وتنظيم الري في مصر القديمة حتمية ظهور:",
-o:["الحدود السياسية","الجيش النظامي","السلطة المركزية","التوسع الخارجي"],
-a:2
-},
-
-{
-q:"ينص الدستور على أن مصر دولة ذات سيادة موحدة لا تقبل التجزئة. يعبر هذا النص بالأساس عن مفهوم:",
-o:["القوة العسكرية","التجانس الثقافي","التضامن الاجتماعي","السيادة المطلقة"],
-a:3
-},
-
-{
-q:"بدأت حرب التحرير بتوسع الملك سقنن رع شمالاً حتى القوصية، ويعكس هذا الإجراء مبدأ مهماً وهو:",
-o:["أسلوب الحرب الخاطفة لحسم المعركة في يوم واحد","بناء القوة وتوسيع نفوذ المقاومة بالتدريج والتخطيط","الدفاع المستميت دون تحريك خطوط القتال","عقد تحالفات عسكرية مع القوى الخارجية"],
-a:1
-},
-
-{
-q:"يرجع المؤرخون سقوط مصر في أيدي الفرس عام 525 ق.م في المقام الأول إلى:",
-o:["الاضطراب السياسي والصراع الداخلي","استسلام الملك أحمس الأول","كثرة العجلات الحربية لدى الفرس","التحالف الفارسي الإغريقي"],
-a:0
-},
-
-{
-q:"تحول مصر عام 641م من الحكم البيزنطي إلى الولاية الإسلامية يمثل تغيراً في:",
-o:["البنية السياسية والإدارية","التركيبة الديموغرافية فوراً","الهوية الدينية فقط","النظام الاقتصادي الزراعي"],
-a:0
-},
-
-{
-q:"اتخاذ أحمد بن طولون من مدينة القطائع مقراً للحكم يعبر عن بداية مرحلة:",
-o:["الاستقلال السياسي عن العباسيين","الاندفاع نحو البحر المتوسط","التبعية المطلقة لدمشق","التحول لولاية عثمانية"],
-a:0
-},
-
-{
-q:"اتجاه محمد علي لبناء جيش نظامي حديث وتطوير الإدارة هدف أساساً إلى:",
-o:["الانضمام للحلف الأوروبي","تحويل مصر لكيان سياسي أكثر استقلالاً","إلغاء البعثات العلمية للخارج","تثبيت التبعية المطلقة للسلطان"],
-a:1
-},
-
-{
-q:"حصول الخديوي إسماعيل على تغيير نظام وراثة الحكم في أكبر أبنائه ترتب عليه:",
-o:["إنهاء أزمة الديون الخارجية فوراً","وضع سياسي أكثر استقلالاً داخلياً","إلغاء الامتيازات الأجنبية","خروج مصر من مظلة القناطر الخيرية"],
-a:1
-},
-
-{
-q:"تمثلت الطبقة الدنيا في الهرم الاجتماعي المصري أواخر القرن 19 في:",
-o:["كبار التجار والمحامين","الفلاحين المعدمين والعمال الموسميين","صغار التجار والحرفيين","أصحاب المصانع والرأسماليين"],
-a:1
-},
-
-{
-q:"المسجد الكبير في عواصم الإسلام لم يكن مجرد دار للعبادة، بل جامعة مركزية. يتفق ذلك مع أحوال مصر في العصر الوسيط من حيث:",
-o:["شمولية أدوار المؤسسات الدينية","اقتصار التعليم على الفسطاط","التنافس بين العلوم الشرعية","ملاحقة العلماء والمراكز العلمية"],
-a:0
-},
-
-{
-q:"أي مما يلي يعد دليلاً على تحقيق مقولة أن ثورة 1919 هزت وعي الأمة؟",
-o:["تصفية الوجود البريطاني","الإرادة الشعبية الوطنية","الاستعانة بالقوى الخارجية","إزالة الفوارق الطائفية والطبقية"],
-a:1
-},
-
-{
-q:"ما الركن الأساسي الذي يضمن تنظيم العلاقة بين الشعب والحيز الجغرافي ويكسب الدولة قدرتها على فرض إرادتها؟",
-o:["الإقامة الدائمة والمستقرة للشعب","امتلاك حيز جغرافي واسع ومحدد","وجود سلطة منظمة تمتلك السيادة","التجانس الثقافي بين أفراد الشعب"],
-a:2
-},
-
-{
-q:"أكد الدستور على تنوع انتماءات مصر العربية والأفريقية والآسيوية والإسلامية. يعكس هذا التنوع:",
-o:["اتساع دوائر التأثير والارتباط الخارجي","اقتصار الدور المصري على الجانب الثقافي","تغليب الهوية القارية على باقي الهويات","التناقض بين الانتماء المحلي والدولي"],
-a:0
-},
-
-{
-q:"تعبر الصورة التي تضم الشعب والحيز الجغرافي والسلطة والسيادة عن:",
-o:["المقومات المشتركة بين الأمة والدولة","المظاهر المؤسسية لإدارة الشؤون الداخلية","أهمية تطبيق مبدأ الفصل بين السلطات","الأسس الضرورية لإعلان ميلاد وحدة سياسية"],
-a:3
+/* الوضع الليلي */
+if(localStorage.getItem('mano_dark')==='1')document.body.classList.add('dark');
+function toggleDark(){
+ document.body.classList.toggle('dark');
+ localStorage.setItem('mano_dark',document.body.classList.contains('dark')?'1':'0');
 }
 
+/* المفضلة */
+let favorites=JSON.parse(localStorage.getItem('mano_favorites')||'[]');
+function saveFav(type,index){
+ const key=type+'_'+index;
+ if(favorites.includes(key))favorites=favorites.filter(x=>x!==key);
+ else favorites.push(key);
+ localStorage.setItem('mano_favorites',JSON.stringify(favorites));
+ renderDuas();renderHadith();renderFavorites();updateStats();
+}
+function isFav(type,index){return favorites.includes(type+'_'+index)}
+function favButton(type,index){
+ return `<button class="${isFav(type,index)?'favorite':'gray'}" onclick="saveFav('${type}',${index})">${isFav(type,index)?'★ محفوظ':'☆ المفضلة'}</button>`;
+}
+function updateStats(){
+ $('favCount').textContent=favorites.length;
+ $('homeCount').textContent=count;
+ $('readCount').textContent=JSON.parse(localStorage.getItem('mano_read')||'[]').length;
+}
+
+/* القرآن الكريم */
+let surahs=[],currentSurah=null,currentIndex=0,whole=false,requestId=0;
+async function loadSurahs(){
+ try{
+  const r=await fetch('https://api.alquran.cloud/v1/surah');
+  const j=await r.json();
+  if(j.code!==200)throw 0;
+  surahs=j.data;renderSurahs(surahs);
+ }catch(e){$('surahList').textContent='تعذر تحميل السور. تأكد من الإنترنت.';}
+}
+function renderSurahs(list){
+ $('surahList').innerHTML=list.map(s=>`
+ <div class="item row">
+ <div><b>${s.number}. ${s.name}</b><br><span class="small">${s.numberOfAyahs} آية</span></div>
+ <button onclick="openSurah(${s.number})">فتح السورة</button></div>`).join('');
+}
+function filterSurahs(){
+ let q=$('surahSearch').value.trim();
+ renderSurahs(surahs.filter(s=>s.name.includes(q)||String(s.number)===q||s.englishName.toLowerCase().includes(q.toLowerCase())));
+}
+async function openSurah(n){
+ currentSurah=n;currentIndex=0;whole=false;
+ $('surahList').classList.add('hidden');$('reader').classList.remove('hidden');
+ $('ayahList').textContent='جاري تحميل السورة...';
+ await loadCurrentSurah(false);
+ let read=JSON.parse(localStorage.getItem('mano_read')||'[]');
+ if(!read.includes(n)){read.push(n);localStorage.setItem('mano_read',JSON.stringify(read));}
+ updateStats();
+}
+async function loadCurrentSurah(keep){
+ const id=++requestId;
+ const edition=$('reciter').value;
+ try{
+  const r=await fetch(`https://api.alquran.cloud/v1/surah/${currentSurah}/${edition}`);
+  const j=await r.json();
+  if(id!==requestId)return;
+  if(j.code!==200)throw 0;
+  const data=j.data;
+  $('surahTitle').textContent=data.name;
+  $('surahInfo').textContent='عدد الآيات: '+data.ayahs.length+' | القارئ: '+$('reciter').selectedOptions[0].text;
+  $('ayahList').innerHTML=data.ayahs.map((a,i)=>`
+   <div class="ayah">${a.text}
+   <button onclick="playAyah(${i})">▶ الآية ${a.numberInSurah}</button></div>`).join('');
+  $('audioStatus').textContent='تم تحميل السورة. اضغط تشغيل السورة كاملة.';
+  window.currentAudioAyahs=data.ayahs;
+  if(!keep)currentIndex=0;
+ }catch(e){$('ayahList').textContent='لم نتمكن من تحميل تسجيل القارئ. جرّب قارئاً آخر.';}
+}
+async function changeReciter(){
+ const wasPlaying=!$('qAudio').paused;
+ const oldWhole=whole,oldIndex=currentIndex;
+ $('qAudio').pause();
+ $('readerStatus').textContent='جاري تحميل صوت القارئ الجديد...';
+ if(!currentSurah){$('readerStatus').textContent='تم اختيار القارئ. افتح سورة للاستماع.';return;}
+ await loadCurrentSurah(true);
+ currentIndex=oldIndex;whole=oldWhole;
+ $('readerStatus').textContent='تم تغيير القارئ.';
+ if(wasPlaying)playCurrent();
+}
+function playWhole(){if(!window.currentAudioAyahs){alert('افتح سورة أولاً');return;}whole=true;currentIndex=0;playCurrent();}
+function playAyah(i){whole=false;currentIndex=i;playCurrent();}
+function playCurrent(){
+ const a=window.currentAudioAyahs?.[currentIndex];
+ if(!a){whole=false;$('audioStatus').textContent='انتهت السورة.';return;}
+ if(!a.audio){currentIndex++;if(whole)playCurrent();return;}
+ $('qAudio').src=a.audio;
+ $('audioStatus').textContent='تشغيل الآية '+(currentIndex+1);
+ $('qAudio').play().catch(()=>$('audioStatus').textContent='اضغط تشغيل في مشغل الصوت.');
+}
+$('qAudio').addEventListener('ended',()=>{if(whole){currentIndex++;playCurrent();}});
+function stopAudio(){whole=false;$('qAudio').pause();}
+function backSurahs(){stopAudio();$('reader').classList.add('hidden');$('surahList').classList.remove('hidden');}
+
+/* الأذكار */
+const azkar={
+morning:[
+['أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.',1],
+['اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور.',1],
+['رضيت بالله رباً، وبالإسلام ديناً، وبمحمد ﷺ نبياً.',3],
+['اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك وأن محمداً عبدك ورسولك.',4],
+['سبحان الله وبحمده.',100],
+['أستغفر الله وأتوب إليه.',100],
+['أعوذ بكلمات الله التامات من شر ما خلق.',3],
+['اللهم صل وسلم على نبينا محمد.',10],
+['حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم.',7],
+['بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم.',3]
+],
+evening:[
+['أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.',1],
+['اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك المصير.',1],
+['رضيت بالله رباً، وبالإسلام ديناً، وبمحمد ﷺ نبياً.',3],
+['سبحان الله وبحمده.',100],
+['أستغفر الله وأتوب إليه.',100],
+['أعوذ بكلمات الله التامات من شر ما خلق.',3],
+['بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم.',3],
+['اللهم صل وسلم على نبينا محمد.',10],
+['حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم.',7]
+],
+after:[
+['أستغفر الله.',3],
+['اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام.',1],
+['سبحان الله.',33],
+['الحمد لله.',33],
+['الله أكبر.',33],
+['لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.',1],
+['آية الكرسي.',1],
+['قل هو الله أحد، وقل أعوذ برب الفلق، وقل أعوذ برب الناس.',1]
+],
+sleep:[
+['باسمك اللهم أموت وأحيا.',1],
+['اللهم قني عذابك يوم تبعث عبادك.',3],
+['سبحان الله.',33],
+['الحمد لله.',33],
+['الله أكبر.',34],
+['اللهم أسلمت نفسي إليك، وفوضت أمري إليك، ووجهت وجهي إليك، وألجأت ظهري إليك، رغبة ورهبة إليك.',1]
+],
+wake:[
+['الحمد لله الذي أحيانا بعدما أماتنا وإليه النشور.',1],
+['الحمد لله الذي عافاني في جسدي ورد علي روحي وأذن لي بذكره.',1]
+]};
+function renderAzkar(){
+ const type=$('azkarType').value;
+ $('azkarList').innerHTML=azkar[type].map((z,i)=>`
+ <div class="card">
+ <div class="arabic center">${z[0]}</div>
+ <p class="center small">التكرار: ${z[1]}</p>
+ <div class="center"><button onclick="zikrCount(this,${z[1]})">تم الذكر</button> <span class="small">المتبقي: <b>${z[1]}</b></span></div>
+ </div>`).join('');
+}
+function zikrCount(btn,total){
+ let b=btn.parentElement.querySelector('b'),n=Number(b.textContent);
+ if(n>0)n--;b.textContent=n;
+ if(n===0){btn.textContent='اكتمل الذكر';btn.disabled=true;btn.classList.add('gray');}
+}
+
+/* الأدعية */
+const duas=[
+['quran','ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار.','البقرة: 201'],
+['quran','ربنا لا تؤاخذنا إن نسينا أو أخطأنا.','البقرة: 286'],
+['quran','ربنا ولا تحمل علينا إصراً كما حملته على الذين من قبلنا.','البقرة: 286'],
+['quran','ربنا أفرغ علينا صبراً وثبت أقدامنا وانصرنا على القوم الكافرين.','البقرة: 250'],
+['quran','رب اشرح لي صدري ويسر لي أمري.','طه: 25-26'],
+['quran','رب زدني علماً.','طه: 114'],
+['quran','ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين.','الأعراف: 23'],
+['quran','ربنا لا تزغ قلوبنا بعد إذ هديتنا وهب لنا من لدنك رحمة إنك أنت الوهاب.','آل عمران: 8'],
+['quran','ربنا هب لنا من أزواجنا وذرياتنا قرة أعين واجعلنا للمتقين إماماً.','الفرقان: 74'],
+['quran','رب اغفر وارحم وأنت خير الراحمين.','المؤمنون: 118'],
+['quran','ربنا آمنا فاغفر لنا وارحمنا وأنت خير الراحمين.','المؤمنون: 109'],
+['rizq','اللهم إني أسألك علماً نافعاً ورزقاً طيباً وعملاً متقبلاً.','دعاء مأثور'],
+['rizq','اللهم اكفني بحلالك عن حرامك وأغنني بفضلك عمن سواك.','دعاء مأثور'],
+['rizq','اللهم ارزقني رزقاً حلالاً طيباً واسعاً مباركاً فيه.','دعاء عام'],
+['rizq','اللهم بارك لي فيما رزقتني وقني عذاب النار.','دعاء عام'],
+['faraj','لا إله إلا أنت سبحانك إني كنت من الظالمين.','الأنبياء: 87'],
+['faraj','اللهم رحمتك أرجو فلا تكلني إلى نفسي طرفة عين وأصلح لي شأني كله.','دعاء مأثور'],
+['faraj','اللهم إني أعوذ بك من الهم والحزن والعجز والكسل والجبن والبخل وضلع الدين وغلبة الرجال.','صحيح البخاري'],
+['faraj','اللهم لا سهل إلا ما جعلته سهلاً وأنت تجعل الحزن إذا شئت سهلاً.','دعاء مأثور'],
+['parents','رب ارحمهما كما ربياني صغيراً.','الإسراء: 24'],
+['parents','ربنا اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب.','إبراهيم: 41'],
+['parents','اللهم اغفر لوالدي وارحمهما وعافهما واعف عنهما.','دعاء عام'],
+['forgiveness','رب اغفر لي وتب علي إنك أنت التواب الرحيم.','دعاء مأثور'],
+['forgiveness','أستغفر الله العظيم وأتوب إليه.','استغفار'],
+['forgiveness','اللهم إنك عفو تحب العفو فاعف عني.','سنن الترمذي'],
+['health','اللهم إني أسألك العفو والعافية في الدنيا والآخرة.','سنن أبي داود'],
+['health','اللهم رب الناس أذهب البأس، اشف أنت الشافي، لا شفاء إلا شفاؤك، شفاء لا يغادر سقماً.','صحيح البخاري'],
+['health','أسأل الله العظيم رب العرش العظيم أن يشفيك.','سنن أبي داود'],
+['travel','سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون.','الزخرف: 13-14'],
+['travel','اللهم إنا نسألك في سفرنا هذا البر والتقوى ومن العمل ما ترضى.','صحيح مسلم'],
+['travel','أستودع الله دينك وأمانتك وخواتيم عملك.','سنن أبي داود']
 ];
-
-// =================================
-// عرض الأسئلة للطالب
-// =================================
-
-const quiz = document.getElementById("quiz");
-
-questions.forEach((item,i)=>{
-
-  const section = document.createElement("section");
-  section.className = "question";
-
-  const title = document.createElement("p");
-  title.className = "qtitle";
-
-  title.textContent =
-    `السؤال ${i+1}: ${item.q}`;
-
-  section.appendChild(title);
-
-  item.o.forEach((option,j)=>{
-
-    const label = document.createElement("label");
-    label.className = "opt";
-
-    const radio = document.createElement("input");
-
-    radio.type = "radio";
-    radio.name = `q${i}`;
-    radio.value = j;
-
-    radio.addEventListener("change",updateProgress);
-
-    const span = document.createElement("span");
-    span.textContent = option;
-
-    label.append(radio,span);
-
-    section.appendChild(label);
-
-  });
-
-  quiz.appendChild(section);
-
-});
-
-// =================================
-// تحديث شريط التقدم
-// =================================
-
-function updateProgress(){
-
-  const count = questions.filter((q,i)=>
-    document.querySelector(
-      `input[name="q${i}"]:checked`
-    )
-  ).length;
-
-  document.getElementById("progressText").textContent =
-    `تمت الإجابة عن ${count} من ${questions.length}`;
-
-  document.getElementById("progress").style.width =
-    (count/questions.length*100)+"%";
-
+function renderDuas(){
+ const cat=$('duaCategory').value;
+ $('duasList').innerHTML=duas.map((d,i)=>({d,i})).filter(x=>cat==='all'||x.d[0]===cat).map(({d,i})=>`
+ <div class="item">
+ <div class="arabic">${d[1]}</div>
+ <p class="small">المصدر: ${d[2]}</p>
+ ${favButton('dua',i)}
+ </div>`).join('');
 }
 
-// =================================
-// تصحيح الامتحان
-// =================================
+/* الأحاديث */
+const hadith=[
+['إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.','صحيح البخاري وصحيح مسلم'],
+['من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.','صحيح البخاري وصحيح مسلم'],
+['لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.','صحيح البخاري وصحيح مسلم'],
+['الدين النصيحة.','صحيح مسلم'],
+['يسروا ولا تعسروا، وبشروا ولا تنفروا.','صحيح البخاري وصحيح مسلم'],
+['الكلمة الطيبة صدقة.','صحيح البخاري وصحيح مسلم'],
+['تبسمك في وجه أخيك لك صدقة.','سنن الترمذي'],
+['الطهور شطر الإيمان.','صحيح مسلم'],
+['من لا يرحم لا يرحم.','صحيح البخاري وصحيح مسلم'],
+['الراحمون يرحمهم الرحمن، ارحموا من في الأرض يرحمكم من في السماء.','سنن الترمذي'],
+['من سلك طريقاً يلتمس فيه علماً سهل الله له به طريقاً إلى الجنة.','صحيح مسلم'],
+['إن الله لا ينظر إلى صوركم وأموالكم ولكن ينظر إلى قلوبكم وأعمالكم.','صحيح مسلم'],
+['اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.','سنن الترمذي'],
+['من حسن إسلام المرء تركه ما لا يعنيه.','سنن الترمذي'],
+['أحب الأعمال إلى الله أدومها وإن قل.','صحيح البخاري وصحيح مسلم'],
+['لا تغضب.','صحيح البخاري'],
+['المسلم من سلم المسلمون من لسانه ويده.','صحيح البخاري وصحيح مسلم'],
+['من غشنا فليس منا.','صحيح مسلم'],
+['الحياء لا يأتي إلا بخير.','صحيح البخاري وصحيح مسلم'],
+['إن الله كتب الإحسان على كل شيء.','صحيح مسلم'],
+['من صلى علي صلاة صلى الله عليه بها عشراً.','صحيح مسلم'],
+['لا تحقرن من المعروف شيئاً ولو أن تلقى أخاك بوجه طلق.','صحيح مسلم'],
+['اليد العليا خير من اليد السفلى.','صحيح البخاري وصحيح مسلم'],
+['اتقوا النار ولو بشق تمرة.','صحيح البخاري وصحيح مسلم'],
+['من دل على خير فله مثل أجر فاعله.','صحيح مسلم'],
+['إن الرفق لا يكون في شيء إلا زانه ولا ينزع من شيء إلا شانه.','صحيح مسلم'],
+['من لا يشكر الناس لا يشكر الله.','سنن أبي داود والترمذي'],
+['خيركم من تعلم القرآن وعلمه.','صحيح البخاري'],
+['اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه.','صحيح مسلم'],
+['لا يدخل الجنة من كان في قلبه مثقال ذرة من كبر.','صحيح مسلم']
+];
+function renderHadith(){
+ const q=$('hadithSearch').value.trim();
+ $('hadithList').innerHTML=hadith.map((h,i)=>({h,i})).filter(x=>x.h[0].includes(q)||x.h[1].includes(q)).map(({h,i})=>`
+ <div class="item">
+ <div class="arabic">${h[0]}</div>
+ <p class="small">المصدر: ${h[1]}</p>
+ ${favButton('hadith',i)}
+ </div>`).join('');
+}
 
-document.getElementById("submit").addEventListener("click",()=>{
+/* أسماء الله الحسنى */
+const names=['الله','الرحمن','الرحيم','الملك','القدوس','السلام','المؤمن','المهيمن','العزيز','الجبار','المتكبر','الخالق','البارئ','المصور','الغفار','القهار','الوهاب','الرزاق','الفتاح','العليم','القابض','الباسط','الخافض','الرافع','المعز','المذل','السميع','البصير','الحكم','العدل','اللطيف','الخبير','الحليم','العظيم','الغفور','الشكور','العلي','الكبير','الحفيظ','المقيت','الحسيب','الجليل','الكريم','الرقيب','المجيب','الواسع','الحكيم','الودود','المجيد','الباعث','الشهيد','الحق','الوكيل','القوي','المتين','الولي','الحميد','المحصي','المبدئ','المعيد','المحيي','المميت','الحي','القيوم','الواجد','الماجد','الواحد','الصمد','القادر','المقتدر','المقدم','المؤخر','الأول','الآخر','الظاهر','الباطن','الوالي','المتعالي','البر','التواب','المنتقم','العفو','الرؤوف','مالك الملك','ذو الجلال والإكرام','المقسط','الجامع','الغني','المغني','المانع','الضار','النافع','النور','الهادي','البديع','الباقي','الوارث','الرشيد','الصبور'];
+$('namesList').innerHTML=names.map((n,i)=>`<div class="tile"><strong>${i+1}</strong>${n}</div>`).join('');
 
-  const unanswered = questions.filter((q,i)=>
-    !document.querySelector(
-      `input[name="q${i}"]:checked`
-    )
-  ).length;
+/* المفضلة */
+function renderFavorites(){
+ let html='';
+ favorites.forEach(key=>{
+  const [type,index]=key.split('_');let content='',source='';
+  if(type==='dua'&&duas[index]){content=duas[index][1];source=duas[index][2];}
+  if(type==='hadith'&&hadith[index]){content=hadith[index][0];source=hadith[index][1];}
+  if(content)html+=`<div class="item"><div class="arabic">${content}</div><p class="small">${source}</p><button class="favorite" onclick="saveFav('${type}',${index})">إزالة من المفضلة</button></div>`;
+ });
+ $('favoritesList').innerHTML=html||'<p>لا توجد عناصر محفوظة حتى الآن.</p>';
+}
 
-  if(unanswered && !confirm(
-    `يوجد ${unanswered} سؤال بدون إجابة. هل تريد التصحيح؟`
-  )) return;
+/* السبحة */
+let count=Number(localStorage.getItem('mano_count')||0);
+function updateCount(){
+ $('counter').textContent=count;$('homeCount').textContent=count;
+}
+function addCount(){count++;localStorage.setItem('mano_count',count);updateCount();}
+function resetCount(){if(confirm('هل تريد تصفير السبحة؟')){count=0;localStorage.setItem('mano_count',0);updateCount();}}
 
-  let score = 0;
-  let review = "";
-
-  questions.forEach((q,i)=>{
-
-    const chosen = document.querySelector(
-      `input[name="q${i}"]:checked`
-    );
-
-    const val = chosen ? Number(chosen.value) : -1;
-
-    const ok = val === q.a;
-
-    if(ok) score++;
-
-    review += `
-
-      <div class="review">
-
-        <strong>السؤال ${i+1}</strong>
-
-        <br>
-
-        ${ok
-          ? '<span class="correct">إجابة صحيحة ✓</span>'
-          : '<span class="wrong">إجابة غير صحيحة ✗</span>'
-        }
-
-        <br>
-
-        إجابتك:
-        ${val<0 ? "لم تتم الإجابة" : q.o[val]}
-
-        <br>
-
-        الإجابة الصحيحة:
-
-        <span class="correct">
-          ${q.o[q.a]}
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-  const result = document.getElementById("result");
-
-  result.innerHTML = `
-
-    <h2>نتيجة امتحان تانيه باكلوريا</h2>
-
-    <div class="score">
-      ${score} / ${questions.length}
-    </div>
-
-    <p>
-      النسبة المئوية:
-      ${Math.round(score/questions.length*100)}%
-    </p>
-
-    <h3>مراجعة الإجابات</h3>
-
-    ${review}
-
-    <p>
-      إنشاء وتصميم مستر محمد المنسي
-    </p>
-
-    <button class="primary" id="retry">
-      إعادة الامتحان
-    </button>
-
-  `;
-
-  result.classList.remove("hidden");
-
-  document.getElementById("controls").classList.add("hidden");
-
-  result.scrollIntoView({behavior:"smooth"});
-
-  document.getElementById("retry").addEventListener("click",()=>{
-    location.reload();
-  });
-
+/* الصلاة */
+let locationData={lat:30.0444,lon:31.2357,name:'القاهرة'};
+let timings=null,alerted={};
+async function loadPrayer(){
+ try{
+  let u=`https://api.aladhan.com/v1/timings?latitude=${locationData.lat}&longitude=${locationData.lon}&method=5`;
+  let r=await fetch(u),j=await r.json();
+  if(j.code!==200)throw 0;
+  timings=j.data.timings;
+  $('locationText').textContent='الموقع: '+locationData.name;
+  $('hijri').textContent='التاريخ الهجري: '+j.data.date.hijri.date;
+  const keys=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+  const names=['الفجر','الظهر','العصر','المغرب','العشاء'];
+  $('prayerGrid').innerHTML=keys.map((k,i)=>`<div class="tile"><strong>${names[i]}</strong>${timings[k]}</div>`).join('');
+  nextPrayer();
+ }catch(e){$('prayerGrid').textContent='تعذر تحميل المواقيت. تحقق من الإنترنت.';}
+}
+function getLocation(){
+ if(!navigator.geolocation){alert('المتصفح لا يدعم الموقع الجغرافي');return;}
+ navigator.geolocation.getCurrentPosition(p=>{
+  locationData={lat:p.coords.latitude,lon:p.coords.longitude,name:'موقعك الحالي'};
+  loadPrayer();
+ },()=>alert('لم يتم تحديد الموقع. اسمح للمتصفح بالوصول إلى الموقع.'));
+}
+function prayerDate(t){
+ let [h,m]=t.split(':').map(Number),d=new Date();
+ d.setHours(h,m,0,0);return d;
+}
+function nextPrayer(){
+ if(!timings)return;
+ const ps=[['الفجر','Fajr'],['الظهر','Dhuhr'],['العصر','Asr'],['المغرب','Maghrib'],['العشاء','Isha']];
+ let now=new Date(),n=ps.map(x=>({name:x[0],date:prayerDate(timings[x[1]])})).find(x=>x.date>now);
+ if(!n){n={name:'الفجر',date:prayerDate(timings.Fajr)};n.date.setDate(n.date.getDate()+1);}
+ $('nextPrayer').textContent=n.name+' '+n.date.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
+}
+async function enableNotify(){
+ if(!('Notification'in window)){alert('المتصفح لا يدعم الإشعارات');return;}
+ let p=await Notification.requestPermission();
+ $('notifyStatus').textContent=p==='granted'?'تم تفعيل الإشعارات. اترك الصفحة مفتوحة.':'لم يتم السماح بالإشعارات.';
+}
+$('adhanFile').addEventListener('change',e=>{
+ let f=e.target.files[0];if(f)$('adhanAudio').src=URL.createObjectURL(f);
 });
-
-// =================================
-// مسح الإجابات
-// =================================
-
-document.getElementById("clear").addEventListener("click",()=>{
-
-  if(confirm("هل تريد مسح جميع الإجابات؟")){
-
-    document.querySelectorAll('input[type="radio"]')
-      .forEach(x=>x.checked=false);
-
-    updateProgress();
-
+function checkAlerts(){
+ if(!timings)return;
+ const ps=[['الفجر','Fajr'],['الظهر','Dhuhr'],['العصر','Asr'],['المغرب','Maghrib'],['العشاء','Isha']];
+ const now=new Date();
+ ps.forEach(([name,key])=>{
+  const d=prayerDate(timings[key]);
+  const before=new Date(d.getTime()-10*60000);
+  const day=now.toDateString()+key;
+  if(now>=before&&now<d&&!alerted[day+'before']){
+   alerted[day+'before']=true;
+   if(Notification.permission==='granted')new Notification('اقترب موعد صلاة '+name,{body:'باقي عشر دقائق على الصلاة'});
   }
+  if(now>=d&&now<new Date(d.getTime()+60000)&&!alerted[day+'now']){
+   alerted[day+'now']=true;
+   if(Notification.permission==='granted')new Notification('حان موعد صلاة '+name);
+   if($('adhanAudio').src){$('adhanAudio').currentTime=0;$('adhanAudio').play().catch(()=>{});}
+  }
+ });
+}
+setInterval(()=>{checkAlerts();nextPrayer();},15000);
 
+/* القبلة */
+function calculateQibla(){
+ if(!navigator.geolocation){$('qiblaResult').textContent='المتصفح لا يدعم تحديد الموقع';return;}
+ navigator.geolocation.getCurrentPosition(p=>{
+  const lat=p.coords.latitude*Math.PI/180,lon=p.coords.longitude*Math.PI/180;
+  const kaabaLat=21.4225*Math.PI/180,kaabaLon=39.8262*Math.PI/180;
+  const y=Math.sin(kaabaLon-lon);
+  const x=Math.cos(lat)*Math.tan(kaabaLat)-Math.sin(lat)*Math.cos(kaabaLon-lon);
+  let deg=(Math.atan2(y,x)*180/Math.PI+360)%360;
+  $('qiblaResult').textContent='اتجاه القبلة: '+deg.toFixed(1)+'° من الشمال';
+ },()=>{$('qiblaResult').textContent='اسمح بتحديد موقعك لحساب اتجاه القبلة.';});
+}
+
+/* نسخ احتياطي */
+function exportData(){
+ const data={favorites,count,read:JSON.parse(localStorage.getItem('mano_read')||'[]'),dark:localStorage.getItem('mano_dark')};
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='MANO-MUSLIM-backup.json';a.click();URL.revokeObjectURL(a.href);
+}
+function importData(){$('backupFile').click();}
+$('backupFile').addEventListener('change',async e=>{
+ const f=e.target.files[0];if(!f)return;
+ try{
+  const d=JSON.parse(await f.text());
+  if(d.favorites)localStorage.setItem('mano_favorites',JSON.stringify(d.favorites));
+  if(Number.isFinite(d.count))localStorage.setItem('mano_count',d.count);
+  if(d.read)localStorage.setItem('mano_read',JSON.stringify(d.read));
+  alert('تم استيراد النسخة الاحتياطية. سيتم تحديث الصفحة.');
+  location.reload();
+ }catch(e){alert('ملف النسخة الاحتياطية غير صالح.');}
 });
 
+/* بدء التطبيق */
+updateCount();updateStats();
+loadSurahs();loadPrayer();renderAzkar();renderDuas();renderHadith();
 </script>
-
 </body>
 </html>
